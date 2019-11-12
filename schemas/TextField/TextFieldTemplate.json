@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://theform.app/schemas/TextField/TextFieldTemplate.json",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "pattern": "TextField"
+    },
+    "id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "id"
+  ]
+}

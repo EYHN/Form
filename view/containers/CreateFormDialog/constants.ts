@@ -1,0 +1,5 @@
+export const CLEAR_NEW_FORM_STATE = 'app/CreateFormDialog/CLEAR_NEW_FORM_STATE';
+
+export const CREATE_NEW_FORM = 'app/CreateFormDialog/CREATE_NEW_FORM:ASYNC_START';
+export const CREATE_NEW_FORM_SUCCESS = 'app/CreateFormDialog/LCREATE_NEW_FORM_SUCCESS:ASYNC_SUCCESS';
+export const CREATE_NEW_FORM_ERROR = 'app/CreateFormDialog/LCREATE_NEW_FORM_ERROR:ASYNC_ERROR';

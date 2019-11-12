@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://theform.app/schemas/FormTemplate.json",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "title": { 
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "form": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "ShortAnswer/ShortAnswerTemplate.json"
+          },
+          {
+            "$ref": "MultiSelection/MultiSelectionTemplate.json"
+          },
+          {
+            "$ref": "SingleSelection/SingleSelectionTemplate.json"
+          },
+          {
+            "$ref": "TextField/TextFieldTemplate.json"
+          },
+          {
+            "$ref": "ImageView/ImageViewTemplate.json"
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "title",
+    "form"
+  ]
+}

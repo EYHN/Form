@@ -1,0 +1,25 @@
+body {
+  -webkit-font-smoothing: antialiased;
+  background-color: #f9f9f9;
+  color: rgba(0,0,0,.87);
+  font-family: "PingFang SC","Helvetica Neue",Helvetica,STHeitiSC-Light,Arial,sans-serif;
+}
+
+textarea {
+  font-family: "PingFang SC","Helvetica Neue",Helvetica,STHeitiSC-Light,Arial,sans-serif;
+}
+
+abbr, address, article, aside, audio, b, blockquote, body, canvas, caption, cite, code, dd, del, details, dfn, div, dl, dt, em, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, p, pre, q, samp, section, small, span, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, ul, var, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: 0 0;
+  line-height: 1.6;
+}
+
+*:disabled {
+  cursor: auto
+}

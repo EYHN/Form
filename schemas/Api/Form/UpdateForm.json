@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://theform.app/schemas/Api/Form/UpdateForm.json",
+  "type": "object",
+  "properties": {
+    "template": {
+      "$ref": "http://theform.app/schemas/FormTemplate.json"
+    }
+  },
+  "required": [
+    "template"
+  ]
+}

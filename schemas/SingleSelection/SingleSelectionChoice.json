@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://theform.app/schemas/SingleSelection/SingleSelectionChoice.json",
+  "anyOf": [
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "pattern": "text"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": ["type","text"]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "pattern": "other"
+        }
+      },
+      "required": ["type"]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://theform.app/schemas/Api/Response/NewResponse.json",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string"
+    },
+    "template": {
+      "$ref": "http://theform.app/schemas/FormTemplate.json"
+    },
+    "encryptedData": {
+      "type": "string"
+    },
+    "key": {
+      "type": "object",
+      "properties": {
+        "encryptedKey": {
+          "type": "string",
+          "maxLength": 256,
+          "minLength": 256
+        },
+        "keyMac": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 64
+        }
+      },
+      "required": [
+        "encryptedKey",
+        "keyMac"
+      ]
+    }
+  },
+  "required": [
+    "template",
+    "date",
+    "encryptedData",
+    "key"
+  ]
+}

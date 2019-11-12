@@ -1,0 +1,26 @@
+{
+  "$schema": "../FormTemplate.json",
+  "title": "title",
+  "description": "desc",
+  "version": "0.0.0",
+  "form": [
+    {
+      "type": "SingleSelection",
+      "id": "1",
+      "title": "SingleSelection 1",
+      "choices": [
+        {
+          "type": "text",
+          "text": "choice 1"
+        },
+        {
+          "type": "text",
+          "text": "choice 2"
+        },
+        {
+          "type": "other"
+        }
+      ]
+    }
+  ]
+}
