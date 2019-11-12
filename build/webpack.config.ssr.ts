@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import CONFIG from '../config';
-import { image, css, typescriptSSR } from './rules';
+import { image, css, typescriptSSR, performanceAssetFilter } from './rules';
 const ReactLoadablePlugin = require(path.resolve(__dirname, '../tools/loadable/webpack')).ReactLoadablePlugin;
 const Visualizer = require('webpack-visualizer-plugin');
 
@@ -57,6 +57,11 @@ const clientconfig: webpack.Configuration = {
       'access-control-allow-origin': '*'
     }
   },
+  performance: {
+    assetFilter: performanceAssetFilter,
+    maxAssetSize: 300000,
+    maxEntrypointSize: 300000
+  },
   node: {
     __dirname: true,
     __filename: true
@@ -104,6 +109,11 @@ const serverconfig: webpack.Configuration = {
       css,
       image
     ]
+  },
+  performance: {
+    assetFilter: performanceAssetFilter,
+    maxAssetSize: 300000,
+    maxEntrypointSize: 300000
   },
   node: {
     __dirname: true,

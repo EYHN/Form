@@ -68,9 +68,6 @@ export const render = async (location: string, __dirname: string) => {
         return `<script type="text/javascript" src="${bundle.publicPath}"></script>`
       }
       return '';
-      // alternatively if you are using publicPath option in webpack config
-      // you can use the publicPath value from bundle, e.g:
-      // return `<script src="${bundle.publicPath}"></script>`
     }).join('\n')}
       <script type="text/javascript" src="/bundle.js"></script>
     </body>

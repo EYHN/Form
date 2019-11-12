@@ -2,7 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CONFIG from '../config';
-import { image, css, typescript } from './rules';
+import { image, css, typescript, performanceAssetFilter } from './rules';
 
 const Visualizer = require('webpack-visualizer-plugin');
 
@@ -64,6 +64,11 @@ const config: webpack.Configuration = {
     headers: {
       'access-control-allow-origin': '*'
     }
+  },
+  performance: {
+    assetFilter: performanceAssetFilter,
+    maxAssetSize: 300000,
+    maxEntrypointSize: 300000
   },
   node: {
     __dirname: true,

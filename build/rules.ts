@@ -93,3 +93,7 @@ export const image = {
     }
   }]
 }
+
+export const performanceAssetFilter = (assetFilename: string) => {
+  return assetFilename.endsWith('.js');
+}
