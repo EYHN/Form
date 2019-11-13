@@ -1,13 +1,14 @@
 import Redisdb from "./Redisdb";
 import Memorydb from "./Memorydb";
+import Leveldb from "./Leveldb";
 
 
-let database: Redisdb | Memorydb;
+let database: Redisdb | Memorydb | Leveldb;
 
 if (process.env.USE_MEMORYDB || process.env.NODE_ENV === 'development') {
   database = new Memorydb(require('./developmentDB.json'))
 } else {
-  database = new Redisdb(process.env.REDIS_URL)
+  database = new Leveldb(process.env.DATABASE || './db')
 }
 
 export default database;
