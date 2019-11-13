@@ -6,17 +6,19 @@ import injectReducer from 'utils/injectReducer';
 import formPageReducer from './reducer';
 import { createSelector } from 'reselect';
 import { loadFormPage, submitFormPage, resetFormPage } from './actions';
-import { makeSelectFormPageId, makeSelectFormPageLoadingError, makeSelectFormPageFormData, makeSelectFormPageLoading, makeSelectFormPageSubmiting, makeSelectFormPageSubmitingError, makeSelectFormPageSubmited } from './selectors';
+import { makeSelectFormPageId, makeSelectFormPageLoadingError, makeSelectFormPageFormData, makeSelectFormPageLoading, makeSelectFormPageSubmitting, makeSelectFormPageSubmittingError, makeSelectFormPageSubmited } from './selectors';
 import { $Call } from 'utils/types';
 import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import injectSaga from 'utils/injectSaga';
 import formPageSaga from './saga';
-import { IFormValue } from '@interface/Form';
+import { IFormValue, IFormMeta } from '@interface/Form';
 import SubmitSuccessPage from './success';
+import { validate } from 'validate';
 
 interface IState {
-  value: IFormValue
+  values: IFormValue;
+  metas: IFormMeta;
 }
 
 const mapStateToProps = createSelector(
@@ -24,10 +26,10 @@ const mapStateToProps = createSelector(
   makeSelectFormPageFormData(),
   makeSelectFormPageLoading(),
   makeSelectFormPageLoadingError(),
-  makeSelectFormPageSubmiting(),
+  makeSelectFormPageSubmitting(),
   makeSelectFormPageSubmited(),
-  makeSelectFormPageSubmitingError(),
-  (id, form, loading, loadingError, submiting, submited, submitingError) => ({ id, form, loading, loadingError, submiting, submited, submitingError })
+  makeSelectFormPageSubmittingError(),
+  (id, form, loading, loadingError, submitting, submited, submittingError) => ({ id, form, loading, loadingError, submitting, submited, submittingError })
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -49,7 +51,8 @@ type Props = stateProps & dispatchProps & IFormPageProps;
 class FormPage extends React.PureComponent<Props, IState> {
 
   state: IState = {
-    value: {}
+    values: {},
+    metas: {}
   }
 
   constructor(props: Props) {
@@ -64,23 +67,73 @@ class FormPage extends React.PureComponent<Props, IState> {
 
   handleChange = (value: IFormValue) => {
     this.setState({
-      value: value
+      values: value
     });
   }
 
+  clearError = (id: string) => {
+    if (this.state.metas[id] && this.state.metas[id].error) {
+      this.setState((state) => ({
+        metas: {
+          ...state.metas,
+          [id]: {error: null}
+        }
+      }));
+    }
+  }
+
+  validateSingle = (id: string, value: any) => {
+    const index = this.props.form.template.form.findIndex(item => item.id === id);
+    const item = this.props.form.template.form[index];
+    const err = validate(item, value);
+    if (err) {
+      this.setState((state) => ({
+        metas: {
+          ...state.metas,
+          [id]: {error: err}
+        }
+      }));
+      return true;
+    }
+  }
+
+  validateAll = () => {
+    const formitems = this.props.form.template.form;
+    const values = this.state.values;
+    const metas: IFormMeta = {};
+    let isError = false;
+    formitems.forEach((item) => {
+      const v = values[item.id];
+      const err = validate(item, v);
+      if (err) {
+        isError = true;
+        metas[item.id] = {
+          error: err
+        };
+      }
+    })
+    if (isError) {
+      this.setState({
+        metas: metas
+      });
+      return true;
+    }
+  }
+
   handleSubmit = () => {
-    this.props.onSubmit(this.state.value);
+    if (this.validateAll()) return;
+    this.props.onSubmit(this.state.values);
   }
 
   handleReset = () => {
     this.setState({
-      value: {}
+      values: {}
     })
     this.props.onReset()
   }
 
   render() {
-    const { form, submited, submiting } = this.props;
+    const { form, submited, submitting } = this.props;
     if (form) {
       const { template } = form;
       return <FormLayout>
@@ -88,11 +141,14 @@ class FormPage extends React.PureComponent<Props, IState> {
           !submited ?
             <Form
               onChange={this.handleChange}
-              value={this.state.value}
+              values={this.state.values}
+              metas={this.state.metas}
               template={template}
-              disabled={submiting}
+              disabled={submitting}
               onSubmit={this.handleSubmit}
-              submiting={submiting}
+              onItemBlurring={this.validateSingle}
+              onItemChanging={this.clearError}
+              submitting={submitting}
             />
             :
             <SubmitSuccessPage onClickReset={this.handleReset} />

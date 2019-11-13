@@ -103,7 +103,7 @@ class EditorPageResponsesLayout extends React.PureComponent<IProps, IState> {
         </div>
       </div>
       <div className={classes.card}>
-        {response && <Form submitButton={false} key={response.id} disabled template={response.template} value={response.value} />}
+        {response && <Form submitButton={false} key={response.id} disabled template={response.template} values={response.value} />}
       </div>
     </div>
   }

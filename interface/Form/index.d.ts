@@ -21,6 +21,21 @@ export interface IFormTemplate {
   form: IFormItemTemplate[];
 }
 
+/**
+ * Parameters for form components to display special effects.
+ */
+export interface IFormItemMeta {
+
+  /**
+   * computed error message
+   */
+  error?: string;
+}
+
+export interface IFormMeta {
+  [id: string]: IFormItemMeta
+}
+
 export interface IFormValue {
   [id: string]: ({} | string | ISingleSelectionValue | IMultiSelectionValue)
 }

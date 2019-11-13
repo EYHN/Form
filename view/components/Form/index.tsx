@@ -5,18 +5,28 @@ import ShortAnswer from './ShortAnswer';
 import TextField from './TextField';
 import ImageView from './ImageView';
 import PageTitle from './PageTitle';
-import { IFormItemTemplate, IFormTemplate, IFormValue } from '@interface/Form';
+import { IFormItemTemplate, IFormTemplate, IFormValue, IFormMeta } from '@interface/Form';
 import SubmitButton from './SubmitButton';
 import FormItem from './FormItem';
 
 export interface IFormProps {
   disabled?: boolean;
   template: IFormTemplate;
-  value: IFormValue;
-  submiting?: boolean;
+  metas?: IFormMeta;
+  values: IFormValue;
+  submitting?: boolean;
   submitButton?: boolean;
   onChange?: (value: IFormValue) => void;
   onSubmit?: (value: IFormValue) => void;
+
+  /**
+   * for calculate the error
+   */
+  onItemBlurring?: (id: string, value: any) => void;
+  /**
+   * for clear the error
+   */
+  onItemChanging?: (id: string, value: any) => void;
 }
 
 const FormComponentMap = {
@@ -31,7 +41,7 @@ class Form extends React.PureComponent<IFormProps> {
 
   handleSubmitButton: React.FormEventHandler = () => {
     if (typeof this.props.onSubmit === 'function') {
-      this.props.onSubmit(this.props.value)
+      this.props.onSubmit(this.props.values)
     }
   }
 
@@ -41,25 +51,42 @@ class Form extends React.PureComponent<IFormProps> {
   }
 
   renderFormItem(template: IFormItemTemplate, index: number) {
-    const value = this.props.value[template.id];
+    const {values, metas, disabled, onChange, onItemBlurring, onItemChanging} = this.props;
+    const id = template.id;
+    const value = values && values[id];
+    const meta = metas && metas[id];
     const Component = FormComponentMap[template.type] as React.ComponentType<any>;
-    const onChange = (value: any) => {
-      if (typeof this.props.onChange !== 'function') return;
-      const newValue = {
-        ...this.props.value,
-        [template.id]: value
-      };
-      this.props.onChange(newValue);
-    };
-    return <Component disabled={this.props.disabled} key={index} template={template} value={value} onChange={onChange}/>;
+    return <Component
+      disabled={disabled}
+      key={index}
+      template={template} 
+      value={value}
+      meta={meta}
+      onChange={(value: any) => {
+        if (typeof onChange !== 'function') return;
+        const newValue = {
+          ...values,
+          [id]: value
+        };
+        onChange(newValue);
+      }}
+      onBlurring={(value: any) => {
+        if (typeof onItemBlurring !== 'function') return;
+        onItemBlurring(id, value);
+      }}
+      onChanging={(value: any) => {
+        if (typeof onItemChanging !== 'function') return;
+        onItemChanging(id, value);
+      }}
+    />;
   }
 
   render() {
-    const {template, submiting, submitButton = true} = this.props;
+    const {template, submitting, submitButton = true} = this.props;
     return <form onSubmit={this.handleFormSubmit}>
       <PageTitle title={template.title} description={template.description} requiredLegend={true}></PageTitle>
       {this.props.template.form.map((template, index) => this.renderFormItem(template, index))}
-      {submitButton && <FormItem><SubmitButton onClick={this.handleSubmitButton}>{submiting ? '提交中...' : '提交'}</SubmitButton></FormItem>}
+      {submitButton && <FormItem><SubmitButton onClick={this.handleSubmitButton} disabled={submitting}>{submitting ? '提交中...' : '提交'}</SubmitButton></FormItem>}
     </form>
   }
 }

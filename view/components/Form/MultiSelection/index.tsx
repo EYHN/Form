@@ -8,12 +8,24 @@ import Description from '../Description';
 import Legend from '../Legend';
 import { Styles } from 'jss';
 import { IMultiSelectionTemplate, IMultiSelectionValue, IMultiSelectionChoice } from '@interface/Form/MultiSelection';
+import { IFormItemMeta } from '@interface/Form';
+import ErrorMesssage from '../ErrorMesssage';
 
 export interface IMultiSelectionProps {
   template: IMultiSelectionTemplate;
   value?: IMultiSelectionValue;
+  meta?: IFormItemMeta;
   disabled?: boolean;
   onChange?: (value: IMultiSelectionValue) => void;
+
+  /**
+   * for calculate the error
+   */
+  onBlurring?: (value: IMultiSelectionValue) => void;
+  /**
+   * for clear the error
+   */
+  onChanging?: (value: IMultiSelectionValue) => void;
 }
 
 const styles: Styles = {
@@ -23,31 +35,48 @@ class MultiSelection extends React.PureComponent<IMultiSelectionProps & WithStyl
   otherTextInput: HTMLInputElement;
 
   handleOtherTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (typeof this.props.onChange !== 'function') return;
-    const value = this.props.value || {};
+    const {value = {}, onChange, onChanging} = this.props;
+    
     const newChoices = value.choices ? value.choices.filter(choice => choice.type !== 'other') : [];
     newChoices.push({
       type: 'other'
     });
-    this.props.onChange({
+    const newvalue: IMultiSelectionValue = {
       ...this.props.value,
       otherText: event.target.value,
       choices: newChoices
-    });
+    };
+    if (typeof onChange === 'function')
+      onChange(newvalue);
+    if (typeof onChanging === 'function')
+      onChanging(newvalue);
+  }
+
+  handleOtherTextBlur = () => {
+    const {onBlurring, value} = this.props;
+    if (typeof onBlurring === 'function')
+      onBlurring(value);
   }
 
   select = (choice: IMultiSelectionChoice) => {
-    if (typeof this.props.onChange !== 'function') return;
-    const value = this.props.value || {};
+    const {value = {}, onChange, onBlurring, onChanging} = this.props;
+    if (typeof onChange !== 'function') return;
     const newChoices = value.choices ? value.choices.filter(value => !deepEqual(value, choice)) : [];
     newChoices.push(choice);
     if (choice.type === 'other' && this.otherTextInput) {
       this.otherTextInput.focus();
     }
-    this.props.onChange({
-      ...this.props.value,
+
+    const newValue = {
+      ...value,
       choices: newChoices
-    });
+    };
+    if (typeof onChanging === 'function')
+      onChanging(newValue);
+    if (typeof onChange === 'function')
+      onChange(newValue);
+    if (typeof onChange === 'function')
+      onBlurring(newValue);
   }
 
   unselect = (choice: IMultiSelectionChoice) => {
@@ -91,6 +120,7 @@ class MultiSelection extends React.PureComponent<IMultiSelectionProps & WithStyl
         textInput
         textValue={value.otherText}
         onTextChange={this.handleOtherTextChange}
+        onTextBlur={this.handleOtherTextBlur}
         disabled={this.props.disabled}
       >
         其他
@@ -99,6 +129,7 @@ class MultiSelection extends React.PureComponent<IMultiSelectionProps & WithStyl
   }
 
   render() {
+    const {meta = {}} = this.props;
     const title = this.props.template.title &&
       <Legend>
         {this.props.template.title}
@@ -112,6 +143,8 @@ class MultiSelection extends React.PureComponent<IMultiSelectionProps & WithStyl
       <ul>
         {this.props.template.choices.map(this.renderChoice)}
       </ul>
+      {meta.error &&
+      <ErrorMesssage>{meta.error}</ErrorMesssage>}
     </FormItem>
   }
 }

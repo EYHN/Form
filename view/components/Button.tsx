@@ -40,6 +40,9 @@ const styles: Styles = {
     '&:active': {
       backgroundColor: 'rgba(21, 101, 192, 0.2)',
     }
+  },
+  disabled: {
+    opacity: 0.7
   }
 }
 
@@ -48,14 +51,16 @@ export interface IButtonProps {
   className?: string;
   shadow?: boolean;
   primary?: boolean;
+  disabled?: boolean;
   type?: "button" | "submit" | "reset";
 }
 
-const Button: React.SFC<IButtonProps & WithStyles<typeof styles>> = ({classes, className, type, onClick, children, primary, shadow}) => (
+const Button: React.SFC<IButtonProps & WithStyles<typeof styles>> = ({classes, className, type, onClick, children, primary, shadow, disabled}) => (
   <button
-    className={classNames(classes.button, shadow && classes.shadow, primary && classes.primary, className)}
+    className={classNames(classes.button, shadow && classes.shadow, primary && classes.primary, disabled && classes.disabled, className)}
     onClick={onClick}
     type={type}
+    disabled={disabled}
   >
     {children}
   </button>

@@ -1,6 +1,6 @@
 import { LOAD_FORM_PAGE, SUBMIT_FORM_PAGE } from "./constants";
 import { put, takeEvery, call, takeLeading, select } from 'redux-saga/effects';
-import { formPageLoadingError, loadFormPage, formPageLoaded, submitFormPage, formPageSubmitingError, formPageSubmited } from "./actions";
+import { formPageLoadingError, loadFormPage, formPageLoaded, submitFormPage, formPageSubmittingError, formPageSubmited } from "./actions";
 import { apiFetchForm } from "api/Form";
 import { $Call } from "utils/types";
 import { IForm } from "@interface/Form";
@@ -63,7 +63,7 @@ export function* submitFormSaga(action: $Call<typeof submitFormPage>) {
 
     yield put(formPageSubmited())
   } catch (err) {
-    yield put(formPageSubmitingError(err))
+    yield put(formPageSubmittingError(err))
   }
 }
 

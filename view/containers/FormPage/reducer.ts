@@ -9,8 +9,8 @@ export interface IFormPageState {
   loading: boolean;
   form: IForm;
   loadingError: boolean;
-  submiting: boolean;
-  submitingError: boolean;
+  submitting: boolean;
+  submittingError: boolean;
   submited: boolean;
 }
 
@@ -19,8 +19,8 @@ const initialState: IFormPageState = {
   loading: false,
   form: null,
   loadingError: false,
-  submiting: false,
-  submitingError: false,
+  submitting: false,
+  submittingError: false,
   submited: false
 };
 
@@ -48,27 +48,27 @@ export default function formPageReducer(state = initialState, action: FormPageAc
     case SUBMIT_FORM_PAGE:
       return {
         ...state,
-        submiting: true,
-        submitingError: false
+        submitting: true,
+        submittingError: false
       }
     case SUBMIT_FORM_PAGE_SUCCESS:
       return {
         ...state,
-        submiting: false,
-        submitingError: false,
+        submitting: false,
+        submittingError: false,
         submited: true
       }
     case SUBMIT_FORM_PAGE_ERROR:
       return {
         ...state,
-        submiting: false,
-        submitingError: true
+        submitting: false,
+        submittingError: true
       }
     case RESET_FORM_PAGE:
       return {
         ...state,
-        submiting: false,
-        submitingError: false,
+        submitting: false,
+        submittingError: false,
         submited: false
       }
     default:

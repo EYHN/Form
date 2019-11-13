@@ -6,37 +6,66 @@ import Legend from '../Legend';
 import Selection from '../Selection';
 import Description from '../Description';
 import { ISingleSelectionTemplate, ISingleSelectionValue, ISingleSelectionChoice } from '@interface/Form/SingleSelection';
+import ErrorMesssage from '../ErrorMesssage';
+import { IFormItemMeta } from '@interface/Form';
 
 export interface ISingleSelectionProps {
   template: ISingleSelectionTemplate;
   disabled?: boolean;
   value?: ISingleSelectionValue;
+  meta?: IFormItemMeta;
   onChange?: (value: ISingleSelectionValue) => void;
+  
+  /**
+   * for calculate the error
+   */
+  onBlurring?: (value: ISingleSelectionValue) => void;
+  /**
+   * for clear the error
+   */
+  onChanging?: (value: ISingleSelectionValue) => void;
 }
 
 class SingleSelection extends React.PureComponent<ISingleSelectionProps> {
   otherTextInput: HTMLInputElement;
 
   handleOtherTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (typeof this.props.onChange !== 'function') return;
-    this.props.onChange({
-      ...this.props.value,
+    const {value, onChange, onChanging} = this.props;
+    
+    const newvalue: ISingleSelectionValue = {
+      ...value,
       otherText: event.target.value,
       choice: {
         type: 'other'
       }
-    });
+    };
+    if (typeof onChange === 'function')
+      onChange(newvalue);
+    if (typeof onChanging === 'function')
+      onChanging(newvalue);
+  }
+
+  handleOtherTextBlur = () => {
+    const {onBlurring, value} = this.props;
+    if (typeof onBlurring === 'function')
+      onBlurring(value);
   }
 
   select = (choice: ISingleSelectionChoice) => {
-    if (typeof this.props.onChange !== 'function') return;
+    const {value, onChange, onBlurring, onChanging} = this.props;
     if (choice.type === 'other' && this.otherTextInput) {
       this.otherTextInput.focus();
     }
-    this.props.onChange({
-      ...this.props.value,
+    const newValue = {
+      ...value,
       choice: choice
-    });
+    };
+    if (typeof onChanging === 'function')
+      onChanging(newValue);
+    if (typeof onChange === 'function')
+      onChange(newValue);
+    if (typeof onChange === 'function')
+      onBlurring(newValue);
   }
 
   renderChoice = (choice: ISingleSelectionChoice) => {
@@ -67,6 +96,7 @@ class SingleSelection extends React.PureComponent<ISingleSelectionProps> {
         textInput
         textValue={value.otherText}
         onTextChange={this.handleOtherTextChange}
+        onTextBlur={this.handleOtherTextBlur}
         disabled={this.props.disabled}
       >
         其他
@@ -75,6 +105,7 @@ class SingleSelection extends React.PureComponent<ISingleSelectionProps> {
   }
 
   render() {
+    const {meta = {}} = this.props;
     const title = this.props.template.title &&
       <Legend>
         {this.props.template.title}
@@ -88,6 +119,8 @@ class SingleSelection extends React.PureComponent<ISingleSelectionProps> {
       <ul>
         {this.props.template.choices.map(this.renderChoice)}
       </ul>
+      {meta.error &&
+      <ErrorMesssage>{meta.error}</ErrorMesssage>}
     </FormItem>
   }
 }

@@ -28,12 +28,12 @@ export const makeSelectFormPageSubmited = () => createSelector(
   (formState) => formState.submited
 );
 
-export const makeSelectFormPageSubmiting = () => createSelector(
+export const makeSelectFormPageSubmitting = () => createSelector(
   selectFormPage,
-  (formState) => formState.submiting
+  (formState) => formState.submitting
 );
 
-export const makeSelectFormPageSubmitingError = () => createSelector(
+export const makeSelectFormPageSubmittingError = () => createSelector(
   selectFormPage,
-  (formState) => formState.submitingError
+  (formState) => formState.submittingError
 );

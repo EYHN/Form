@@ -22,7 +22,7 @@ const styles: Styles = {
   }
 }
 
-interface IFormItemProps {
+interface ILegendEditorProps {
   className?: string;
   placeholder?: string;
   title?: string;
@@ -32,7 +32,7 @@ interface IFormItemProps {
   disabled?: boolean
 }
 
-class LegendEditor extends React.PureComponent<IFormItemProps & WithStyles<typeof styles>> {
+class LegendEditor extends React.PureComponent<ILegendEditorProps & WithStyles<typeof styles>> {
   handleTitleChange: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
     if (typeof this.props.onTitleChange !== 'function')return;
     this.props.onTitleChange(event.target.value.split('\n')[0]);

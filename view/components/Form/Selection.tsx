@@ -50,7 +50,8 @@ interface ISelectionProps {
   textInput?: boolean;
   textValue?: string;
   textPlaceholder?: string;
-  onTextChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onTextChange?: React.ChangeEventHandler;
+  onTextBlur?: React.FocusEventHandler;
   component?: React.ReactType<{ className: string }>;
   ref?: React.Ref<any>;
 }
@@ -67,6 +68,7 @@ const Selection: React.SFC<ISelectionProps & WithStyles<typeof styles>> = (
     textValue,
     textPlaceholder,
     onTextChange,
+    onTextBlur,
     component: Component = 'div',
     type = 'radio'
   }) => (
@@ -92,7 +94,7 @@ const Selection: React.SFC<ISelectionProps & WithStyles<typeof styles>> = (
       </label>}
       {
         textInput &&
-        <TextInput disabled={disabled} placeholder={textPlaceholder} className={classes.textInput} onChange={onTextChange} value={textValue}></TextInput>
+        <TextInput disabled={disabled} placeholder={textPlaceholder} className={classes.textInput} onChange={onTextChange} onBlur={onTextBlur} value={textValue}></TextInput>
       }
     </Component>
   )

@@ -8,6 +8,6 @@ export const formPageLoadingError = createAction(LOAD_FORM_PAGE_ERROR, resolve =
 
 export const submitFormPage = createAction(SUBMIT_FORM_PAGE, resolve => (value: IFormValue) => resolve(value));
 export const formPageSubmited = createAction(SUBMIT_FORM_PAGE_SUCCESS);
-export const formPageSubmitingError = createAction(SUBMIT_FORM_PAGE_ERROR, resolve => (error: Error) => resolve(error));
+export const formPageSubmittingError = createAction(SUBMIT_FORM_PAGE_ERROR, resolve => (error: Error) => resolve(error));
 
 export const resetFormPage = createAction(RESET_FORM_PAGE);
