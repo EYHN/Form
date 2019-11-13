@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 import Ajv from 'ajv';
 
 const schemafiles = globby.sync(['**/*.json', '!test'], {
-  cwd: path.resolve(__dirname, '../schemas'),
+  cwd: path.resolve(process.cwd(), 'schemas'),
   absolute: true
 });
 

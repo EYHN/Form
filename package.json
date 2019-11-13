@@ -7,11 +7,12 @@
   "license": "AGPL-3.0",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "npm run clean && npm run build:csr & npm run build:ssr",
+    "build": "npm run clean && npm run build:csr & npm run build:ssr & npm run build:server",
+    "build:server": "tsc --build ./server/tsconfig.json",
     "build:csr": "cross-env NODE_ENV=production webpack --config build/webpack.config.csr.ts",
     "build:ssr": "cross-env NODE_ENV=production webpack --config build/webpack.config.ssr.ts",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --progress --hot --config build/webpack.config.csr.ts",
-    "server": "cross-env NODE_ENV=production ts-node ./server/index.ts",
+    "server": "cross-env NODE_ENV=production node ./dist/server/index.js",
     "dev:server": "cross-env NODE_ENV=development ts-node ./server/index.ts"
   },
   "dependencies": {

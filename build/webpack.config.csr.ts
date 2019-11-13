@@ -1,20 +1,19 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import CONFIG from '../config';
 import { image, css, typescript, performanceAssetFilter } from './rules';
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const HtmlWebpackConfig: HtmlWebpackPlugin.Options = {
-  title: CONFIG.site.name,
+  title: 'Form.app',
   filename: 'index.html',
   hash: true,
   showErrors: true
 }
 
 const config: webpack.Configuration = {
-  name: CONFIG.site.name,
+  name: 'Form.app',
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   context: path.resolve(__dirname, '../view/'),
   target: 'web',

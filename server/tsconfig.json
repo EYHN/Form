@@ -16,15 +16,11 @@
         "./node_modules/@types"
     ],
     "paths": {
-      "@interface/*": ["./interface/*"]
+      "@interface/*": ["../interface/*"]
     },
-    "outDir": "dist"
+    "outDir": "../dist"
   },
   "include": [
     "**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "./view"
   ]
 }

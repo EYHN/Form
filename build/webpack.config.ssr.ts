@@ -1,12 +1,11 @@
 import path from 'path';
 import webpack from 'webpack';
-import CONFIG from '../config';
 import { image, css, typescriptSSR, performanceAssetFilter } from './rules';
 const ReactLoadablePlugin = require(path.resolve(__dirname, '../tools/loadable/webpack')).ReactLoadablePlugin;
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const clientconfig: webpack.Configuration = {
-  name: CONFIG.site.name,
+  name: 'Form.app',
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   context: path.resolve(__dirname, '../view/'),
   target: 'web',
@@ -71,7 +70,7 @@ const clientconfig: webpack.Configuration = {
 };
 
 const serverconfig: webpack.Configuration = {
-  name: CONFIG.site.name,
+  name: 'Form.app',
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   context: path.resolve(__dirname, '../view/'),
   target: 'node',
