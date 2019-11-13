@@ -4,7 +4,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CONFIG from '../config';
 import { image, css, typescript, performanceAssetFilter } from './rules';
 
-const Visualizer = require('webpack-visualizer-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const HtmlWebpackConfig: HtmlWebpackPlugin.Options = {
   title: CONFIG.site.name,
@@ -32,8 +32,10 @@ const config: webpack.Configuration = {
 
   plugins: [
     new HtmlWebpackPlugin(HtmlWebpackConfig),
-    new Visualizer({
-      filename: './stats.html'
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false,
+      analyzerMode: 'static',
+      reportFilename: './stats.html'
     }),
     new webpack.DefinePlugin({
       API_SERVER: JSON.stringify('http://localhost:3000')

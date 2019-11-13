@@ -3,7 +3,7 @@ import webpack from 'webpack';
 import CONFIG from '../config';
 import { image, css, typescriptSSR, performanceAssetFilter } from './rules';
 const ReactLoadablePlugin = require(path.resolve(__dirname, '../tools/loadable/webpack')).ReactLoadablePlugin;
-const Visualizer = require('webpack-visualizer-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const clientconfig: webpack.Configuration = {
   name: CONFIG.site.name,
@@ -23,8 +23,10 @@ const clientconfig: webpack.Configuration = {
   devtool: 'source-map',
 
   plugins: [
-    new Visualizer({
-      filename: './stats.html'
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false,
+      analyzerMode: 'static',
+      reportFilename: './stats.html'
     }),
     new webpack.DefinePlugin({
       API_SERVER: JSON.stringify('')
