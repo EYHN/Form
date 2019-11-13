@@ -8,29 +8,31 @@ import Description from '../Description';
 import { ISingleSelectionTemplate, ISingleSelectionValue, ISingleSelectionChoice } from '@interface/Form/SingleSelection';
 import ErrorMesssage from '../ErrorMesssage';
 import { IFormItemMeta } from '@interface/Form';
+import { IFormComponentProps } from '..';
 
-export interface ISingleSelectionProps {
+export interface ISingleSelectionProps extends IFormComponentProps {
+  id: string;
   template: ISingleSelectionTemplate;
   disabled?: boolean;
   value?: ISingleSelectionValue;
   meta?: IFormItemMeta;
-  onChange?: (value: ISingleSelectionValue) => void;
+  onChange?: (id: string, value: ISingleSelectionValue) => void;
   
   /**
    * for calculate the error
    */
-  onBlurring?: (value: ISingleSelectionValue) => void;
+  onBlurring?: (id: string, value: ISingleSelectionValue) => void;
   /**
    * for clear the error
    */
-  onChanging?: (value: ISingleSelectionValue) => void;
+  onChanging?: (id: string, value: ISingleSelectionValue) => void;
 }
 
 class SingleSelection extends React.PureComponent<ISingleSelectionProps> {
   otherTextInput: HTMLInputElement;
 
   handleOtherTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {value, onChange, onChanging} = this.props;
+    const {id, value, onChange, onChanging} = this.props;
     
     const newvalue: ISingleSelectionValue = {
       ...value,
@@ -40,19 +42,19 @@ class SingleSelection extends React.PureComponent<ISingleSelectionProps> {
       }
     };
     if (typeof onChange === 'function')
-      onChange(newvalue);
+      onChange(id, newvalue);
     if (typeof onChanging === 'function')
-      onChanging(newvalue);
+      onChanging(id, newvalue);
   }
 
   handleOtherTextBlur = () => {
-    const {onBlurring, value} = this.props;
+    const {id, onBlurring, value} = this.props;
     if (typeof onBlurring === 'function')
-      onBlurring(value);
+      onBlurring(id, value);
   }
 
   select = (choice: ISingleSelectionChoice) => {
-    const {value, onChange, onBlurring, onChanging} = this.props;
+    const {id, value, onChange, onBlurring, onChanging} = this.props;
     if (choice.type === 'other' && this.otherTextInput) {
       this.otherTextInput.focus();
     }
@@ -61,11 +63,11 @@ class SingleSelection extends React.PureComponent<ISingleSelectionProps> {
       choice: choice
     };
     if (typeof onChanging === 'function')
-      onChanging(newValue);
+      onChanging(id, newValue);
     if (typeof onChange === 'function')
-      onChange(newValue);
+      onChange(id, newValue);
     if (typeof onChange === 'function')
-      onBlurring(newValue);
+      onBlurring(id, newValue);
   }
 
   renderChoice = (choice: ISingleSelectionChoice) => {

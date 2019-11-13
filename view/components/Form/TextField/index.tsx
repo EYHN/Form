@@ -3,8 +3,9 @@ import FormItem from '../FormItem';
 import Legend from '../Legend';
 import Description from '../Description';
 import { ITextFieldTemplate } from '@interface/Form/TextField';
+import { IFormComponentProps } from '..';
 
-export interface ITextFieldProps {
+export interface ITextFieldProps extends IFormComponentProps {
   template: ITextFieldTemplate;
 }
 

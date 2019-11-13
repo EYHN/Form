@@ -2,8 +2,9 @@ import React from 'react';
 import FormItem from '../FormItem';
 import Legend from '../Legend';
 import { IImageViewTemplate } from '@interface/Form/ImageView';
+import { IFormComponentProps } from '..';
 
-export interface IImageViewProps {
+export interface IImageViewProps extends IFormComponentProps {
   template: IImageViewTemplate;
 }
 

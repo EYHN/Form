@@ -5,9 +5,31 @@ import ShortAnswer from './ShortAnswer';
 import TextField from './TextField';
 import ImageView from './ImageView';
 import PageTitle from './PageTitle';
-import { IFormItemTemplate, IFormTemplate, IFormValue, IFormMeta } from '@interface/Form';
+import { IFormItemTemplate, IFormTemplate, IFormValue, IFormMeta, IFormItemMeta } from '@interface/Form';
 import SubmitButton from './SubmitButton';
 import FormItem from './FormItem';
+
+export interface IFormComponentProps {
+  id: string;
+  template: IFormItemTemplate;
+  disabled?: boolean;
+  value?: any;
+  meta?: IFormItemMeta;
+
+  // For performance, each callback function has an id argument
+  /**
+   * for calculate the error
+   */
+  onChange?: (id: string, value: any) => void;
+  /**
+   * for calculate the error
+   */
+  onBlurring?: (id: string, value: any) => void;
+  /**
+   * for clear the error
+   */
+  onChanging?: (id: string, value: any) => void;
+}
 
 export interface IFormProps {
   disabled?: boolean;
@@ -16,9 +38,9 @@ export interface IFormProps {
   values: IFormValue;
   submitting?: boolean;
   submitButton?: boolean;
-  onChange?: (value: IFormValue) => void;
   onSubmit?: (value: IFormValue) => void;
 
+  onItemChange?: (id: string, value: any) => void;
   /**
    * for calculate the error
    */
@@ -29,7 +51,7 @@ export interface IFormProps {
   onItemChanging?: (id: string, value: any) => void;
 }
 
-const FormComponentMap = {
+const FormComponentMap: {[name: string]: React.ComponentType<IFormComponentProps>} = {
   ShortAnswer: ShortAnswer,
   SingleSelection: SingleSelection,
   MultiSelection: MultiSelection,
@@ -51,33 +73,21 @@ class Form extends React.PureComponent<IFormProps> {
   }
 
   renderFormItem(template: IFormItemTemplate, index: number) {
-    const {values, metas, disabled, onChange, onItemBlurring, onItemChanging} = this.props;
+    const {values, metas, disabled, onItemChange, onItemBlurring, onItemChanging} = this.props;
     const id = template.id;
     const value = values && values[id];
     const meta = metas && metas[id];
-    const Component = FormComponentMap[template.type] as React.ComponentType<any>;
+    const Component = FormComponentMap[template.type];
     return <Component
+      id={id}
       disabled={disabled}
       key={index}
       template={template} 
       value={value}
       meta={meta}
-      onChange={(value: any) => {
-        if (typeof onChange !== 'function') return;
-        const newValue = {
-          ...values,
-          [id]: value
-        };
-        onChange(newValue);
-      }}
-      onBlurring={(value: any) => {
-        if (typeof onItemBlurring !== 'function') return;
-        onItemBlurring(id, value);
-      }}
-      onChanging={(value: any) => {
-        if (typeof onItemChanging !== 'function') return;
-        onItemChanging(id, value);
-      }}
+      onChange={onItemChange}
+      onBlurring={onItemBlurring}
+      onChanging={onItemChanging}
     />;
   }
 

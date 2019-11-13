@@ -65,10 +65,13 @@ class FormPage extends React.PureComponent<Props, IState> {
       onLoadFormPage(match.params.id);
   }
 
-  handleChange = (value: IFormValue) => {
-    this.setState({
-      values: value
-    });
+  handleChange = (id: string, value: any) => {
+    this.setState((state) => ({
+      values: {
+        ...state,
+        [id]: value
+      }
+    }));
   }
 
   clearError = (id: string) => {
@@ -140,12 +143,12 @@ class FormPage extends React.PureComponent<Props, IState> {
         {
           !submited ?
             <Form
-              onChange={this.handleChange}
               values={this.state.values}
               metas={this.state.metas}
               template={template}
               disabled={submitting}
               onSubmit={this.handleSubmit}
+              onItemChange={this.handleChange}
               onItemBlurring={this.validateSingle}
               onItemChanging={this.clearError}
               submitting={submitting}

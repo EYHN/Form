@@ -97,7 +97,7 @@ class EditorPageResponsesLayout extends React.PureComponent<IProps, IState> {
         <div>
           <IconButton onClick={this.handlePrev} className={classes.toolbarIcon} icon={Left} />
           <form className={classes.toolbarText} onSubmit={this.handleInputSubmit}>
-            第 <TextInput type='string' inputClassName={classes.pageNumberInput} inline onChange={this.handleInputChange} onBlur={this.handleInputBlur} value={this.state.pageInput.toString()} /> 条，共 2 条
+            第 <TextInput type='string' inputClassName={classes.pageNumberInput} inline onChange={this.handleInputChange} onBlur={this.handleInputBlur} value={this.state.pageInput.toString()} /> 条，共 {responses.length} 条
           </form>
           <IconButton onClick={this.handleNext} className={classes.toolbarIcon} icon={Right} />
         </div>

@@ -30,13 +30,14 @@ const styles: Styles = {
     cursor: 'pointer',
     fontSize: '0.95em',
     paddingLeft: 12,
-    flexGrow: 1
+    paddingRight: 12
   },
   labelDisabled: {
     cursor: 'auto'
   },
   textInput: {
-    paddingLeft: 12,
+  },
+  grow: {
     flexGrow: 1
   }
 }
@@ -87,14 +88,14 @@ const Selection: React.SFC<ISelectionProps & WithStyles<typeof styles>> = (
           onClick={onClick}
         />}
       {children && <label
-        className={classNames(classes.label, disabled && classes.labelDisabled)}
+        className={classNames(classes.label, disabled && classes.labelDisabled, !textInput && classes.grow)}
         onClick={onClick}
       >
         {children}
       </label>}
       {
         textInput &&
-        <TextInput disabled={disabled} placeholder={textPlaceholder} className={classes.textInput} onChange={onTextChange} onBlur={onTextBlur} value={textValue}></TextInput>
+        <TextInput disabled={disabled} placeholder={textPlaceholder} className={classNames(classes.textInput, classes.grow)} onChange={onTextChange} onBlur={onTextBlur} value={textValue}></TextInput>
       }
     </Component>
   )

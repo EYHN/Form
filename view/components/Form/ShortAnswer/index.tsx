@@ -6,37 +6,39 @@ import Description from '../Description';
 import { IShortAnswerTemplate } from '@interface/Form/ShortAnswer';
 import { IFormItemMeta } from '@interface/Form';
 import ErrorMesssage from '../ErrorMesssage';
+import { IFormComponentProps } from '..';
 
-export interface IShortAnswerProps {
+export interface IShortAnswerProps extends IFormComponentProps {
+  id: string;
   template: IShortAnswerTemplate;
   disabled?: boolean;
   value?: string;
   meta?: IFormItemMeta;
-  onChange?: (value: string) => void;
+  onChange?: (id: string, value: string) => void;
 
   /**
    * for calculate the error
    */
-  onBlurring?: (value: string) => void;
+  onBlurring?: (id: string, value: string) => void;
   /**
    * for clear the error
    */
-  onChanging?: (value: string) => void;
+  onChanging?: (id: string, value: string) => void;
 }
 
 export default class ShortAnswer extends React.PureComponent<IShortAnswerProps> {
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {value} = event.target
+    const {id, value} = event.target
     if (typeof this.props.onChange === 'function')
-      this.props.onChange(value);
+      this.props.onChange(id, value);
     if (typeof this.props.onChanging === 'function')
-      this.props.onChanging(value);
+      this.props.onChanging(id, value);
   }
   
   handleBlur = () => {
-    const {onBlurring, value} = this.props;
+    const {id, onBlurring, value} = this.props;
     if (typeof onBlurring === 'function')
-      onBlurring(value);
+      onBlurring(id, value);
   }
 
   render() {
