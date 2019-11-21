@@ -1,7 +1,5 @@
-import { databaseExists, databaseGet, databaseSet } from "./database";
+import { databaseGet, databaseSet } from "./database";
 import { IResponse } from "@interface/Response";
-
-export const responseExists = (id: string) => databaseExists(`response:${id}`)
 
 export const responseGet = async (id: string) => JSON.parse(await databaseGet(`response:${id}`)) as IResponse;
 

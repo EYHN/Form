@@ -11,7 +11,4 @@ export default class Memorydb {
   delete = async (key: string) => {
     return Reflect.deleteProperty(this.data, key);
   }
-  exists = async (key: string) => {
-    return Reflect.has(this.data, key) ;
-  }
 }

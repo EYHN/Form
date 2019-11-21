@@ -15,4 +15,3 @@ export default database;
 export const databaseGet = database.get as (key: string) => Promise<string>;
 export const databaseSet = database.set as (key: string, value: string) => Promise<boolean>;
 export const databaseDelete = database.delete as (key: string) => Promise<boolean>;
-export const databaseExists = database.exists as (key: string) => Promise<boolean>;

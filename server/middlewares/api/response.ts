@@ -1,7 +1,7 @@
 import Router from "koa-router";
 import bodyParser from "koa-bodyparser";
-import { formExists, formGetResponses, formPushResponse } from "../../models/form";
-import { responseGet, responseExists, responseCreate } from "../../models/response";
+import { formGetResponses, formPushResponse, formGet } from "../../models/form";
+import { responseGet, responseCreate } from "../../models/response";
 import { ApiResponseNewResponseSchema, errorsText } from '../../schemas';
 import { IApiNewResponseRequest } from "@interface/Api/Response";
 import crypto from '@eyhn/crypto';
@@ -15,7 +15,7 @@ responseAPI.get('/form/:id/responses', async (ctx) => {
 
   const id = ctx.params.id;
 
-  if (!await formExists(id)) {
+  if (!await formGet(id)) {
     ctx.throw(404);
     return;
   }
@@ -35,7 +35,7 @@ responseAPI.post('/form/:id/responses', async (ctx) => {
 
   const id = ctx.params.id;
 
-  if (!await formExists(id)) {
+  if (!await formGet(id)) {
     ctx.throw(404);
     return;
   }
@@ -54,7 +54,7 @@ responseAPI.post('/form/:id/responses', async (ctx) => {
 
   do {
     responseId = crypto.tools.arrayBufferToHex(crypto.prng()(new Uint8Array(32)));
-  } while (await responseExists(responseId));
+  } while (await responseGet(responseId));
 
   await responseCreate(responseId, {
     id: responseId,

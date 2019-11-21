@@ -9,5 +9,4 @@ export default class Redisdb {
   get = promisify(this.database.get).bind(this.database)
   set = promisify(this.database.set).bind(this.database);
   delete = promisify(this.database.del).bind(this.database);
-  exists = promisify(this.database.exists).bind(this.database);
 }

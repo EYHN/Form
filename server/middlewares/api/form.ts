@@ -2,21 +2,25 @@ import compose from 'koa-compose';
 import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 import { errorsText, ApiFormNewFormSchema, ApiFormUpdateFormSchema } from '../../schemas';
-import { formExists, formCreate, formGetDate, formGetTemplate, formUpdateTemplate, formGetKey } from '../../models/form';
-import { IFormTemplate, IFormKey } from '@interface/Form';
+import { formCreate, formUpdateTemplate, formGet } from '../../models/form';
+import { IForm, IFormTemplate, IFormKey } from '@interface/Form';
 import crypto from '@eyhn/crypto';
 import { IApiFetchFormResponse, IApiNewFormRequest, IApiUpdateFormRequest } from '@interface/Api/Form';
 
 const formAPI = new Router();
 
-function buildFormResponse(id: string, template: IFormTemplate, key: IFormKey, date: string): IApiFetchFormResponse {
+function buildForm(id: string, template: IFormTemplate, key: IFormKey, date: string): IForm {
   return {
     url: 'http://theform.app/form/' + id,
     id,
     key,
     date,
     template
-  }
+  };
+}
+
+function buildFormResponse(form: IForm): IApiFetchFormResponse {
+  return form;
 }
 
 formAPI.use(bodyParser());
@@ -25,18 +29,14 @@ formAPI.get('/form/:id', async (ctx) => {
 
   const id = ctx.params.id;
 
-  if (!await formExists(id)) {
+  const form = await formGet(id);
+
+  if (!form) {
     ctx.throw(404);
     return;
   }
 
-  const [date, template, key] = await Promise.all([
-    formGetDate(id),
-    formGetTemplate(id),
-    formGetKey(id)
-  ]);
-
-  ctx.body = buildFormResponse(id, template, key, date);
+  ctx.body = buildFormResponse(form);
 });
 
 formAPI.post('/form', async (ctx) => {
@@ -71,7 +71,7 @@ formAPI.post('/form', async (ctx) => {
     return;
   }
 
-  if (await formExists(id)) {
+  if (await formGet(id)) {
     ctx.throw(JSON.stringify({
       message: 'Form already exists.',
       error: true
@@ -81,8 +81,9 @@ formAPI.post('/form', async (ctx) => {
 
   const template = body.template;
   const date = body.date;
-  await formCreate(id, template, body.key, date);
-  ctx.body = buildFormResponse(id, template, body.key, date)
+  const form = buildForm(id, template, body.key, date);
+  await formCreate(id, form);
+  ctx.body = buildFormResponse(form)
 });
 
 formAPI.post('/form/:id', async (ctx) => {
@@ -97,13 +98,14 @@ formAPI.post('/form/:id', async (ctx) => {
   }
 
   const id = ctx.params.id;
+  const form = await formGet(id);
 
-  if (!id || !await formExists(id)) {
+  if (!id || !form) {
     ctx.throw(404);
     return;
   }
 
-  const key = await formGetKey(id);
+  const key = form.key;
   const signature = ctx.request.header['x-signature'] || '';
   
   if (signature.length !== 256 &&
@@ -123,9 +125,10 @@ formAPI.post('/form/:id', async (ctx) => {
   const template = body.template;
 
   await formUpdateTemplate(id, template);
-
-  const date = await formGetDate(id);
-  ctx.body = buildFormResponse(id, template, key, date);
+  ctx.body = buildFormResponse({
+    ...form,
+    template
+  });
 });
 
 export default compose([
