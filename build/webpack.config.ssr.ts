@@ -5,7 +5,7 @@ const ReactLoadablePlugin = require(path.resolve(__dirname, '../tools/loadable/w
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const clientconfig: webpack.Configuration = {
-  name: 'Form.app',
+  name: 'The Form',
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   context: path.resolve(__dirname, '../view/'),
   target: 'web',
@@ -70,7 +70,7 @@ const clientconfig: webpack.Configuration = {
 };
 
 const serverconfig: webpack.Configuration = {
-  name: 'Form.app',
+  name: 'The Form',
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   context: path.resolve(__dirname, '../view/'),
   target: 'node',

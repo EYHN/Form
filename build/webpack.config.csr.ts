@@ -6,14 +6,14 @@ import { image, css, typescript, performanceAssetFilter } from './rules';
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const HtmlWebpackConfig: HtmlWebpackPlugin.Options = {
-  title: 'Form.app',
+  title: 'The Form',
   filename: 'index.html',
   hash: true,
   showErrors: true
 }
 
 const config: webpack.Configuration = {
-  name: 'Form.app',
+  name: 'The Form',
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   context: path.resolve(__dirname, '../view/'),
   target: 'web',
