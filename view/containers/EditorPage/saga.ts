@@ -8,11 +8,38 @@ import { createSelector } from "reselect";
 import crypto from '@eyhn/crypto';
 import { IForm, IFormTemplate } from "@interface/Form";
 import editorPageResponsesSaga from "./Responses/saga";
+import { keyCacheGet, keyCacheDelete, keyCacheSet } from "models/keyCache";
 
-export function* getForm(action: $Call<typeof loadEditorPage>) {
+export function* loadFormSaga(action: $Call<typeof loadEditorPage>) {
   try {
     const data: IForm = yield call(apiFetchForm, action.payload);
     yield put(editorPageLoaded(data));
+
+    // read aes key cache
+    const keyCache = yield call(keyCacheGet, data.id)
+    if (keyCache) {
+      const formKey = data.key;
+
+      const encryptedPrivateKey = crypto.tools.hexToArrayBuffer(
+        formKey.encryptedPrivateKey
+      );
+
+      const privatekey = crypto.aes.ctr.decrypt(
+        keyCache,
+        encryptedPrivateKey
+      );
+
+      const privateKeyMac = crypto.hmac.sha256(keyCache, privatekey);
+
+      if (crypto.tools.arrayBufferToHex(privateKeyMac) === formKey.privateKeyMac) {
+        // Key is right, unlock the form.
+        yield put(editorPageUnlocked(crypto.tools.arrayBufferToHex(privatekey)));
+      } else {
+        // Key in the cache is wrong, delete the cache.
+        keyCacheDelete(data.id);
+      }
+    }
+
   } catch (err) {
     yield put(editorPageLoadingError(err));
   }
@@ -44,6 +71,10 @@ export function* unlockFormSaga(action: $Call<typeof unlockEditorPage>) {
 
     if (crypto.tools.arrayBufferToHex(privateKeyMac) === formKey.privateKeyMac) {
       yield put(editorPageUnlocked(crypto.tools.arrayBufferToHex(privatekey)));
+
+      // save aes key
+      const formId = makeSelectEditorPageFormId()(yield select());
+      yield call(keyCacheSet, formId, aeskey);
     } else {
       throw new Error('Password Error');
     }
@@ -87,7 +118,7 @@ export function* updateForm() {
 }
 
 export default function* editorPageSaga() {
-  yield takeEvery(LOAD_EDITOR_PAGE, getForm);
+  yield takeEvery(LOAD_EDITOR_PAGE, loadFormSaga);
   yield takeEvery(UNLOCK_EDITOR_PAGE, unlockFormSaga);
   yield takeLatest(SAVE_EDITOR_PAGE, saveForm);
   yield debounce(1000, UPDATE_EDITOR_PAGE_FORM_TEMPLATE, updateForm);

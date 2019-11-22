@@ -5,6 +5,7 @@ import { apiNewForm } from "api/Form";
 import { $Call } from "utils/types";
 import crypto from '@eyhn/crypto';
 import { IApiNewFormResponse } from "@interface/Api/Form";
+import { keyCacheSet } from "models/keyCache";
 
 export function* createForm(action: $Call<typeof createNewForm>) {
   try {
@@ -42,6 +43,10 @@ export function* createForm(action: $Call<typeof createNewForm>) {
       )
     );
     yield put(newFormCreated(data));
+
+    // save aes key
+    yield call(keyCacheSet, data.id, aeskey);
+
     window.location.href = '/editor/' + data.id;
   } catch (err) {
     yield put(newFormCreatingError(err));
