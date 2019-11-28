@@ -16,9 +16,7 @@
       "type": "object",
       "properties": {
         "encryptedKey": {
-          "type": "string",
-          "maxLength": 256,
-          "minLength": 256
+          "type": "string"
         },
         "keyMac": {
           "type": "string",

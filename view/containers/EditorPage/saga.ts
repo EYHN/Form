@@ -8,38 +8,12 @@ import { createSelector } from "reselect";
 import crypto from '@eyhn/crypto';
 import { IForm, IFormTemplate } from "@interface/Form";
 import editorPageResponsesSaga from "./Responses/saga";
-import { keyCacheGet, keyCacheDelete, keyCacheSet } from "models/keyCache";
+import { IApiUpdateFormResponse } from "@interface/Api/Form";
 
 export function* loadFormSaga(action: $Call<typeof loadEditorPage>) {
   try {
     const data: IForm = yield call(apiFetchForm, action.payload);
     yield put(editorPageLoaded(data));
-
-    // read aes key cache
-    const keyCache = yield call(keyCacheGet, data.id)
-    if (keyCache) {
-      const formKey = data.key;
-
-      const encryptedPrivateKey = crypto.tools.hexToArrayBuffer(
-        formKey.encryptedPrivateKey
-      );
-
-      const privatekey = crypto.aes.ctr.decrypt(
-        keyCache,
-        encryptedPrivateKey
-      );
-
-      const privateKeyMac = crypto.hmac.sha256(keyCache, privatekey);
-
-      if (crypto.tools.arrayBufferToHex(privateKeyMac) === formKey.privateKeyMac) {
-        // Key is right, unlock the form.
-        yield put(editorPageUnlocked(crypto.tools.arrayBufferToHex(privatekey)));
-      } else {
-        // Key in the cache is wrong, delete the cache.
-        keyCacheDelete(data.id);
-      }
-    }
-
   } catch (err) {
     yield put(editorPageLoadingError(err));
   }
@@ -70,11 +44,10 @@ export function* unlockFormSaga(action: $Call<typeof unlockEditorPage>) {
     const privateKeyMac = crypto.hmac.sha256(aeskey, privatekey);
 
     if (crypto.tools.arrayBufferToHex(privateKeyMac) === formKey.privateKeyMac) {
-      yield put(editorPageUnlocked(crypto.tools.arrayBufferToHex(privatekey)));
-
-      // save aes key
-      const formId = makeSelectEditorPageFormId()(yield select());
-      yield call(keyCacheSet, formId, aeskey);
+      yield put(editorPageUnlocked({
+        privateKey: crypto.tools.arrayBufferToHex(privatekey),
+        aesKey: crypto.tools.arrayBufferToHex(aeskey)
+      }));
     } else {
       throw new Error('Password Error');
     }
@@ -99,14 +72,14 @@ export function* saveForm() {
 
     const { id, template, publicKey, privatekey }: { id: string, template: IFormTemplate, publicKey: ArrayBuffer, privatekey: ArrayBuffer } = yield select(selector);
 
-    yield call(apiUpdateForm,
+    const form: IApiUpdateFormResponse = yield call(apiUpdateForm,
       id,
       template,
       (data: string) => crypto.tools.arrayBufferToHex(
         crypto.rsa.sign(crypto.tools.textToArrayBuffer(data), privatekey, publicKey)
       )
     );
-    yield put(editorPageSaved());
+    yield put(editorPageSaved(form));
   } catch (err) {
     yield put(editorPageSavingError(err));
   }

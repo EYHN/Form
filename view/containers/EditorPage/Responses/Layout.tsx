@@ -1,12 +1,14 @@
 import React from 'react';
 import { Styles } from 'jss';
 import injectSheet, { WithStyles } from 'react-jss';
-import IconButton from 'components/icons/IconButton';
 import Left from 'components/icons/Left';
 import Right from 'components/icons/Right';
 import TextInput from 'components/Form/TextInput';
 import { IDecryptedResponse } from './actions';
 import Form from 'components/Form';
+import ToolBar from 'components/ToolBar/ToolBar';
+import ToolBarIconButton from 'components/ToolBar/ToolBarIconButton';
+import ToolBarText from 'components/ToolBar/ToolBarText';
 
 const styles: Styles = {
   root: {
@@ -24,19 +26,7 @@ const styles: Styles = {
     minHeight: '400px'
   },
   toolbar: {
-    display: 'flex',
-    position: 'relative',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     margin: '8px 0'
-  },
-  toolbarIcon: {
-    height: '48px',
-    padding: '12px'
-  },
-  toolbarText: {
-    display: 'inline-block',
-    lineHeight: '48px'
   },
   pageNumberInput: {
     width: '32px',
@@ -93,15 +83,15 @@ class EditorPageResponsesLayout extends React.PureComponent<IProps, IState> {
     const response = responses[this.state.page - 1];
 
     return <div className={classes.root}>
-      <div className={classes.toolbar}>
-        <div>
-          <IconButton onClick={this.handlePrev} className={classes.toolbarIcon} icon={Left} />
-          <form className={classes.toolbarText} onSubmit={this.handleInputSubmit}>
+      <ToolBar className={classes.toolbar}>
+        <ToolBarIconButton onClick={this.handlePrev} className={classes.toolbarIcon} icon={Left} />
+        <ToolBarText>
+          <form onSubmit={this.handleInputSubmit}>
             第 <TextInput type='string' inputClassName={classes.pageNumberInput} inline onChange={this.handleInputChange} onBlur={this.handleInputBlur} value={this.state.pageInput.toString()} /> 条，共 {responses.length} 条
           </form>
-          <IconButton onClick={this.handleNext} className={classes.toolbarIcon} icon={Right} />
-        </div>
-      </div>
+        </ToolBarText>
+        <ToolBarIconButton onClick={this.handleNext} className={classes.toolbarIcon} icon={Right} />
+      </ToolBar>
       <div className={classes.card}>
         {response && <Form submitButton={false} key={response.id} disabled template={response.template} values={response.value} />}
       </div>

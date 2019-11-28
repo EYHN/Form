@@ -5,28 +5,27 @@ import { apiNewForm } from "api/Form";
 import { $Call } from "utils/types";
 import crypto from '@eyhn/crypto';
 import { IApiNewFormResponse } from "@interface/Api/Form";
-import { keyCacheSet } from "models/keyCache";
 
 export function* createForm(action: $Call<typeof createNewForm>) {
   try {
-    const { n: publickey, d: privatekey } = crypto.rsa.generate(1024, 10001);
+    const { n: publickey, d: privateKey } = crypto.rsa.generate(1024, 10001);
 
     const password = action.payload.password;
 
     const date = new Date().toUTCString();
 
-    const aeskey = crypto.pbkdf2.sha256(
+    const aesKey = crypto.pbkdf2.sha256(
       crypto.tools.textToArrayBuffer(password),
       crypto.tools.textToArrayBuffer('miku'),
       5000,
       32
     );
 
-    const privateKeyMac = crypto.hmac.sha256(aeskey, privatekey);
+    const privateKeyMac = crypto.hmac.sha256(aesKey, privateKey);
 
     const encryptedPrivateKey = crypto.aes.ctr.encrypt(
-      aeskey,
-      privatekey
+      aesKey,
+      privateKey
     );
 
     const data: IApiNewFormResponse = yield call(
@@ -39,15 +38,16 @@ export function* createForm(action: $Call<typeof createNewForm>) {
       },
       date,
       (data: string) => crypto.tools.arrayBufferToHex(
-        crypto.rsa.sign(crypto.tools.textToArrayBuffer(data), privatekey, publickey)
+        crypto.rsa.sign(crypto.tools.textToArrayBuffer(data), privateKey, publickey)
       )
     );
-    yield put(newFormCreated(data));
+    yield put(newFormCreated({
+      form: data,
+      privateKey: crypto.tools.arrayBufferToHex(privateKey),
+      aesKey: crypto.tools.arrayBufferToHex(aesKey)
+    }));
 
-    // save aes key
-    yield call(keyCacheSet, data.id, aeskey);
-
-    window.location.href = '/editor/' + data.id;
+    history.pushState(null, null, '/editor/' + data.id)
   } catch (err) {
     yield put(newFormCreatingError(err));
   }

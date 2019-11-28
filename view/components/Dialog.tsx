@@ -21,7 +21,8 @@ const styles: Styles = {
     position: 'relative',
     boxShadow: '0 12px 15px 0 rgba(0,0,0,0.24)',
     background: '#fff',
-    borderRadius: '2px',
+    borderRadius: '4px',
+    overflow: 'hidden',
     marginTop: '3em',
     maxWidth: '592px',
     width: '100%'

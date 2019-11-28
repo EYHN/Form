@@ -7,6 +7,8 @@ import { JssProvider } from 'react-jss';
 import { jss } from 'styles';
 import { Provider } from 'react-redux';
 import configureStore from 'store';
+import keyCacheSaga from 'service/keyCache/saga';
+import formCacheSaga from 'service/formCache/saga';
 
 const MOUNT_NODE = document.body;
 
@@ -16,6 +18,9 @@ MOUNT_NODE.appendChild(root);
 
 const initialState = {};
 const store = configureStore(initialState);
+
+store.runSaga(keyCacheSaga)
+store.runSaga(formCacheSaga)
 
 const render = (Content: React.ComponentType) => {
   ReactDOM.render(

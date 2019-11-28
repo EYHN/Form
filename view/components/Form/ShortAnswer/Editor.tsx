@@ -2,13 +2,15 @@ import React from 'react';
 import TextInput from '../TextInput';
 import TextArea from '../TextArea';
 import Description from '../Description';
-import EditorItem, { EditorItemToolbarSeparator } from '../EditorItem';
+import EditorItem from '../EditorItem';
 import LegendEditor from '../LegendEditor';
 import Delete from 'components/icons/Delete';
-import IconButton from 'components/icons/IconButton';
 import Switch from 'components/Switch';
 import Tooltip from 'components/Tooltip';
 import { IShortAnswerTemplate } from '@interface/Form/ShortAnswer';
+import ToolBarIconButton from 'components/ToolBar/ToolBarIconButton';
+import ToolBarText from 'components/ToolBar/ToolBarText';
+import ToolBarSeparator from 'components/ToolBar/ToolBarSeparator';
 
 export interface IShortAnswerProps {
   template: IShortAnswerTemplate;
@@ -54,11 +56,11 @@ export default class ShortAnswerEditor extends React.PureComponent<IShortAnswerP
     const { template, onDelete, disabled } = this.props;
 
     return <EditorItem component='fieldset' disabled={disabled} toolbar={<>
-      <div>
+      <ToolBarText>
         必填&nbsp;&nbsp;&nbsp;<Switch checked={template.required} onChange={this.handleRequiredChange} disabled={disabled} />
-      </div>
-      <EditorItemToolbarSeparator />
-      <Tooltip tip='删除' dir='bottom' disabled={disabled}><IconButton icon={Delete} onClick={onDelete} disabled={disabled} /></Tooltip>
+      </ToolBarText>
+      <ToolBarSeparator />
+      <Tooltip tip='删除' dir='bottom' disabled={disabled}><ToolBarIconButton icon={Delete} onClick={onDelete} disabled={disabled} /></Tooltip>
     </>}>
       <LegendEditor title={template.title} onTitleChange={this.handleTitleChange} type={template.type} onTypeChange={this.handleTypeChange} disabled={disabled} />
       <Description>

@@ -2,7 +2,7 @@ import React from 'react';
 import { IFormTemplate } from '@interface/Form';
 import { Dispatch, compose } from 'redux';
 import { $Call } from 'utils/types';
-import { makeSelectCreateFormDialogError, makeSelectCreateFormDialogCreating } from './selectors';
+import { makeSelectCreateFormDialogError, makeSelectCreateFormDialogCreating, makeSelectCreateFormDialogCreated, makeSelectCreateFormDialogForm } from './selectors';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import createFormDialogReducer from './reducer';
@@ -11,6 +11,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import CreateFormDialogLayout from './layout';
 import { createNewForm, clearNewFormState } from './actions';
+import { Redirect } from 'react-router';
 
 interface IState {
   title: string;
@@ -22,8 +23,10 @@ interface IState {
 
 const mapStateToProps = createSelector(
   makeSelectCreateFormDialogCreating(),
+  makeSelectCreateFormDialogCreated(),
   makeSelectCreateFormDialogError(),
-  (creating, error) => ({ creating, error })
+  makeSelectCreateFormDialogForm(),
+  (creating, created, error, form) => ({ creating, created, error, form })
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -117,21 +120,24 @@ class CreateFormDialog extends React.PureComponent<Props, IState> {
   }
 
   render() {
-    const { onClose } = this.props;
+    const { onClose, created, form } = this.props;
     const { title, password, confirmPassword, date, error, errorMessage } = this.state;
-    return <CreateFormDialogLayout
-      title={title}
-      password={password}
-      confirmPassword={confirmPassword}
-      date={date}
-      error={error}
-      errorMessage={errorMessage}
-      onClose={onClose}
-      onSubmit={this.handleOnSubmit}
-      onConfirmPasswordChange={this.handleOnConfirmPasswordChange}
-      onPasswordChange={this.handleOnPasswordChange}
-      onTitleChange={this.handleOnTitleChange}
-    />
+    return <>
+      <CreateFormDialogLayout
+        title={title}
+        password={password}
+        confirmPassword={confirmPassword}
+        date={date}
+        error={error}
+        errorMessage={errorMessage}
+        onClose={onClose}
+        onSubmit={this.handleOnSubmit}
+        onConfirmPasswordChange={this.handleOnConfirmPasswordChange}
+        onPasswordChange={this.handleOnPasswordChange}
+        onTitleChange={this.handleOnTitleChange}
+      />
+      {created && <Redirect to={'/editor/' + form.id} />}
+    </>
   }
 }
 

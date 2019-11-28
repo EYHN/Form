@@ -12,7 +12,8 @@ interface IAppBarButtonProps {
 const styles: Styles = {
   button: {
     height: '48px',
-    minWidth: '72px'
+    minWidth: '64px',
+    fontWeight: 500
   }
 }
 

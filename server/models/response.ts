@@ -1,7 +1,14 @@
 import { databaseGet, databaseSet } from "./database";
 import { IResponse } from "@interface/Response";
 
-export const responseGet = async (id: string) => JSON.parse(await databaseGet(`response:${id}`)) as IResponse;
+export function parseResponse(response: string): IResponse {
+  if (response) {
+    return JSON.parse(response);
+  }
+  return null;
+}
+
+export const responseGet = async (id: string) => parseResponse(await databaseGet(`response:${id}`));
 
 export const responseCreate = async (id: string, response: IResponse) => {
   await databaseSet(`response:${id}`, JSON.stringify(response));

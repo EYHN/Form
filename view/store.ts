@@ -1,9 +1,10 @@
 import { createStore, compose, applyMiddleware, Middleware, Store } from "redux";
 import createReducer from './reducers';
 import { IFormPageState } from "containers/FormPage/reducer";
-import { default as createSagaMiddleware, SagaMiddleware } from 'redux-saga';
+import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { IEditorPageState } from "containers/EditorPage/reducer";
 import { ICreateFormDialogState } from "containers/CreateFormDialog/reducer";
+import { IPanelPageState } from "containers/PanelPage/reducer";
 
 export interface IStore extends Store<IState> {
   injectedReducers: any;
@@ -14,6 +15,7 @@ export interface IStore extends Store<IState> {
 export interface IState {
   formPage?: IFormPageState;
   editorPage?: IEditorPageState;
+  panelPage?: IPanelPageState;
   createFormDialog?: ICreateFormDialogState;
   network: any;
 }

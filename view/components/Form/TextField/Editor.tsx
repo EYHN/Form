@@ -4,9 +4,9 @@ import Description from '../Description';
 import EditorItem from '../EditorItem';
 import LegendEditor from '../LegendEditor';
 import Delete from 'components/icons/Delete';
-import IconButton from 'components/icons/IconButton';
 import Tooltip from 'components/Tooltip';
 import { ITextFieldTemplate } from '@interface/Form/TextField';
+import ToolBarIconButton from 'components/ToolBar/ToolBarIconButton';
 
 export interface ITextFieldEditorProps {
   template: ITextFieldTemplate;
@@ -44,7 +44,7 @@ export default class TextFieldEditor extends React.PureComponent<ITextFieldEdito
     const { template, onDelete, disabled } = this.props;
 
     return <EditorItem component='fieldset' disabled={disabled} toolbar={<>
-      <Tooltip tip='删除' dir='bottom' disabled={disabled}><IconButton icon={Delete} onClick={onDelete} disabled={disabled} /></Tooltip>
+      <Tooltip tip='删除' dir='bottom' disabled={disabled}><ToolBarIconButton icon={Delete} onClick={onDelete} disabled={disabled} /></Tooltip>
     </>}>
       <LegendEditor title={template.title} onTitleChange={this.handleTitleChange} type={template.type} disabled={disabled}/>
       <Description>

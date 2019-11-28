@@ -15,6 +15,7 @@ import formPageSaga from './saga';
 import { IFormValue, IFormMeta } from '@interface/Form';
 import SubmitSuccessPage from './success';
 import { validate } from 'validate';
+import Helmet from './Helmet';
 
 interface IState {
   values: IFormValue;
@@ -68,7 +69,7 @@ class FormPage extends React.PureComponent<Props, IState> {
   handleChange = (id: string, value: any) => {
     this.setState((state) => ({
       values: {
-        ...state,
+        ...state.values,
         [id]: value
       }
     }));
@@ -139,24 +140,27 @@ class FormPage extends React.PureComponent<Props, IState> {
     const { form, submited, submitting } = this.props;
     if (form) {
       const { template } = form;
-      return <FormLayout>
-        {
-          !submited ?
-            <Form
-              values={this.state.values}
-              metas={this.state.metas}
-              template={template}
-              disabled={submitting}
-              onSubmit={this.handleSubmit}
-              onItemChange={this.handleChange}
-              onItemBlurring={this.validateSingle}
-              onItemChanging={this.clearError}
-              submitting={submitting}
-            />
-            :
-            <SubmitSuccessPage onClickReset={this.handleReset} />
-        }
-      </FormLayout>
+      return <>
+        <Helmet formTitle={template.title} />
+        <FormLayout>
+          {
+            !submited ?
+              <Form
+                values={this.state.values}
+                metas={this.state.metas}
+                template={template}
+                disabled={submitting}
+                onSubmit={this.handleSubmit}
+                onItemChange={this.handleChange}
+                onItemBlurring={this.validateSingle}
+                onItemChanging={this.clearError}
+                submitting={submitting}
+              />
+              :
+              <SubmitSuccessPage onClickReset={this.handleReset} />
+          }
+        </FormLayout>
+      </>
     } else {
       return <></>
     }

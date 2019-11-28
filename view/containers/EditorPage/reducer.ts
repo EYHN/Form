@@ -79,7 +79,7 @@ function editorPageMainReducer(state = initialState, action: EditorPageActions):
         ...state,
         unlocked: true,
         unlockingError: false,
-        privateKey: action.payload
+        privateKey: action.payload.privateKey
       };
     case UNLOCK_EDITOR_PAGE_ERROR:
       return {

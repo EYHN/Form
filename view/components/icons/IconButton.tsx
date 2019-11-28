@@ -1,7 +1,7 @@
 import React from 'react';
 import { ISvgIconProps } from "./SvgIcon";
 
-interface IProps {
+export interface IIconButtonProps {
   icon: (props: ISvgIconProps) => JSX.Element;
   className?: string;
   color?: string;
@@ -11,7 +11,7 @@ interface IProps {
   disabledColor?: string;
 }
 
-const IconButton: React.SFC<IProps> = ({icon: Icon, className, color = '#767676', size = 24, onClick, disabled, disabledColor = '#ccc'}) => 
+const IconButton: React.SFC<IIconButtonProps> = ({icon: Icon, className, color = '#767676', size = 24, onClick, disabled, disabledColor = '#ccc'}) => 
   <Icon
     color={disabled ? disabledColor : color}
     className={className}

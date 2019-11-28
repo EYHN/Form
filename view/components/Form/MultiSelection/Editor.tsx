@@ -3,12 +3,14 @@ import LegendEditor from '../LegendEditor';
 import Description from '../Description';
 import TextArea from '../TextArea';
 import SelectionEditor from '../SelectionEditor';
-import EditorItem, { EditorItemToolbarSeparator } from '../EditorItem';
-import IconButton from 'components/icons/IconButton';
+import EditorItem from '../EditorItem';
 import Delete from 'components/icons/Delete';
 import Switch from 'components/Switch';
 import Tooltip from 'components/Tooltip';
 import { IMultiSelectionTemplate, IMultiSelectionChoice } from '@interface/Form/MultiSelection';
+import ToolBarSeparator from 'components/ToolBar/ToolBarSeparator';
+import ToolBarText from 'components/ToolBar/ToolBarText';
+import ToolBarIconButton from 'components/ToolBar/ToolBarIconButton';
 
 export interface IMultiSelectionEditorProps {
   template: IMultiSelectionTemplate;
@@ -60,11 +62,11 @@ class MultiSelectionEditor extends React.PureComponent<IMultiSelectionEditorProp
   render() {
     const { template, onDelete, disabled } = this.props;
     return <EditorItem component='fieldset' disabled={disabled} toolbar={<>
-      <div>
+      <ToolBarText>
         必填&nbsp;&nbsp;&nbsp;<Switch checked={template.required} onChange={this.handleRequiredChange} disabled={disabled} />
-      </div>
-      <EditorItemToolbarSeparator />
-      <Tooltip tip='删除' dir='bottom' disabled={disabled}><IconButton icon={Delete} onClick={onDelete} disabled={disabled} /></Tooltip>
+      </ToolBarText>
+      <ToolBarSeparator />
+      <Tooltip tip='删除' dir='bottom' disabled={disabled}><ToolBarIconButton icon={Delete} onClick={onDelete} disabled={disabled} /></Tooltip>
     </>}>
       <LegendEditor title={template.title} onTitleChange={this.handleTitleChange} type={template.type} onTypeChange={this.handleTypeChange} disabled={disabled} />
       <Description>

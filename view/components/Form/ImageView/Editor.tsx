@@ -2,12 +2,12 @@ import React from 'react';
 import EditorItem from '../EditorItem';
 import LegendEditor from '../LegendEditor';
 import Delete from 'components/icons/Delete';
-import IconButton from 'components/icons/IconButton';
 import Tooltip from 'components/Tooltip';
 import injectSheet, { WithStyles } from 'react-jss';
 import classNames from 'classnames';
 import { Styles } from 'jss';
 import { IImageViewTemplate } from '@interface/Form/ImageView';
+import ToolBarIconButton from 'components/ToolBar/ToolBarIconButton';
 
 export interface IImageViewEditorProps {
   template: IImageViewTemplate;
@@ -174,7 +174,7 @@ class ImageViewEditor extends React.PureComponent<IImageViewEditorProps & WithSt
     const { template, onDelete, classes, disabled } = this.props;
 
     return <EditorItem component='fieldset' disabled={disabled} toolbar={<>
-      <Tooltip tip='删除' dir='bottom' disabled={disabled}><IconButton icon={Delete} onClick={onDelete} disabled={disabled} /></Tooltip>
+      <Tooltip tip='删除' dir='bottom' disabled={disabled}><ToolBarIconButton icon={Delete} onClick={onDelete} disabled={disabled} /></Tooltip>
     </>}>
       <LegendEditor title={template.title} onTitleChange={this.handleTitleChange} type={template.type} placeholder='图片标题' disabled={disabled} />
       <div className={classes.container} style={{height: !template.url && '300px'}}>

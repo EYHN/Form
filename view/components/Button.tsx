@@ -17,7 +17,7 @@ const styles: Styles = {
     fontWeight: 600,
     outline: 'none',
     position: 'relative',
-    borderRadius: '2px',
+    borderRadius: '4px',
     userSelect: 'none',
     overflow: 'hidden',
     backgroundColor: 'transparent',

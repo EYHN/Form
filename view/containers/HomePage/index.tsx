@@ -1,9 +1,8 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
-import AppBarTitle from 'components/AppBar/AppBarTitle';
 import HomeLayout from 'components/Layout/HomeLayout';
-import AppBarButton from 'components/AppBar/AppBarButton';
 import CreateFormDialog from 'containers/CreateFormDialog';
+import Helmet from './Helmet';
 
 interface IState {
   createDialog: boolean;
@@ -31,25 +30,16 @@ class HomePage extends React.PureComponent<IHomePageProps, IState> {
 
   render() {
     return (
-      <HomeLayout
-        onClickNewForm={this.handleOpenCreateDialog}
-        appbarleft={
-          <>
-            <AppBarTitle>The Form</AppBarTitle>
-          </>
-        }
-        appbarright={
-          <>
-            <AppBarButton>博客</AppBarButton>
-            <AppBarButton>支持</AppBarButton>
-            <AppBarButton>关于</AppBarButton>
-          </>
-        }
-      >
-        {
-          this.state.createDialog && <CreateFormDialog onClose={this.handleCloseCreateDialog} />
-        }
-      </HomeLayout>
+      <>
+        <Helmet />
+        <HomeLayout
+          onClickNewForm={this.handleOpenCreateDialog}
+        >
+          {
+            this.state.createDialog && <CreateFormDialog onClose={this.handleCloseCreateDialog} />
+          }
+        </HomeLayout>
+      </>
     );
   }
 }

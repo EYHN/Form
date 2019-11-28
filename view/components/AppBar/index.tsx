@@ -14,13 +14,18 @@ const styles: Styles = {
     display: 'flex',
     position: 'relative',
     justifyContent: 'space-between',
-    alignItems: 'center',
     padding: '10px 8px',
+    flexWrap: 'wrap',
     color: '#fff',
     backgroundColor: '#1565c0'
   },
-  full: {
-    flexGrow: 1
+  side: {
+    display: 'flex',
+    flexGrow: 1,
+    alignItems: 'center'
+  },
+  rightSide: {
+    justifyContent: 'flex-end'
   }
 }
 
@@ -29,9 +34,12 @@ const AppBar: React.SFC<IAppBarProps & WithStyles<typeof styles>> = ({
 }) => {
   return (
     <div className={classNames(classes.main, className)}>
-      {left}
-      <span className={classNames(classes.full)} />
-      {right}
+      <div className={classes.side}>
+        {left}
+      </div>
+      <div className={classNames(classes.side, classes.rightSide)}>
+        {right}
+      </div>
     </div>
   );
 };

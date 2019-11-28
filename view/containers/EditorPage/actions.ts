@@ -9,9 +9,9 @@ export const editorPageLoadingError = createAction(LOAD_EDITOR_PAGE_ERROR, resol
 export const updateEditorPageFormTemplate = createAction(UPDATE_EDITOR_PAGE_FORM_TEMPLATE, resolve => (template: IFormTemplate) => resolve(template));
 
 export const unlockEditorPage = createAction(UNLOCK_EDITOR_PAGE, resolve => (password: string) => resolve(password));
-export const editorPageUnlocked = createAction(UNLOCK_EDITOR_PAGE_SUCCESS, resolve => (privateKey: string) => resolve(privateKey));
+export const editorPageUnlocked = createAction(UNLOCK_EDITOR_PAGE_SUCCESS, resolve => (key: {privateKey: string, aesKey: string}) => resolve(key));
 export const editorPageUnlockingError = createAction(UNLOCK_EDITOR_PAGE_ERROR, resolve => (error: Error) => resolve(error));
 
 export const saveEditorPage = createAction(SAVE_EDITOR_PAGE);
-export const editorPageSaved = createAction(SAVE_EDITOR_PAGE_SUCCESS);
+export const editorPageSaved = createAction(SAVE_EDITOR_PAGE_SUCCESS, resolve => (data: IForm) => resolve(data));
 export const editorPageSavingError = createAction(SAVE_EDITOR_PAGE_ERROR, resolve => (error: Error) => resolve(error));

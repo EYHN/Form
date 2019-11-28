@@ -2,6 +2,7 @@ import React from 'react';
 import injectSheet, { WithStyles } from "react-jss";
 import classNames from 'classnames';
 import { Styles } from 'jss';
+import ToolBar from 'components/ToolBar/ToolBar';
 
 const styles: Styles = {
   editorItem: {
@@ -9,20 +10,13 @@ const styles: Styles = {
     paddingBottom: '32px'
   },
   toolbar: {
-    display: 'flex',
-    alignItems: 'center',
     flexDirection: 'row-reverse',
     marginTop: '16px',
     marginBottom: '-32px',
     marginRight: '-30px',
     paddingRight: '30px',
-    minHeight: '65px',
-    borderTop: '1px solid #e0e0e0',
-    fontSize: '0.9em',
-    fontWeight: 600,
-    '&>*' : {
-      marginLeft: '24px'
-    }
+    minHeight: 64,
+    borderTop: '1px solid #e0e0e0'
   },
   disabled: {
     color: '#545454'
@@ -39,18 +33,10 @@ interface IEditorItemProps {
 const EditorItem: React.SFC<IEditorItemProps & WithStyles<typeof styles>> = ({classes, className, children, toolbar, disabled, component: Component = 'div'}) => (
   <Component className={classNames(classes.editorItem, disabled && classes.disabled, className)}>
     {children}
-    {toolbar && <div className={classes.toolbar}>
+    {toolbar && <ToolBar className={classes.toolbar}>
       {toolbar}
-    </div>}
+    </ToolBar>}
   </Component>
 )
-
-export const EditorItemToolbarSeparator = () => (
-  <div style={{
-    borderLeft: '1px solid #e0e0e0',
-    height: '32px',
-    width: 0
-  }} />
-);
 
 export default injectSheet(styles)(EditorItem)

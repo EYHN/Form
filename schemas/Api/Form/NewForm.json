@@ -13,14 +13,10 @@
       "type": "object",
       "properties": {
         "publicKey": {
-          "type": "string",
-          "maxLength": 256,
-          "minLength": 256
+          "type": "string"
         },
         "encryptedPrivateKey": {
-          "type": "string",
-          "maxLength": 256,
-          "minLength": 256
+          "type": "string"
         },
         "privateKeyMac": {
           "type": "string",

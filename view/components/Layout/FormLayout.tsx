@@ -1,8 +1,8 @@
 import React from 'react';
 import injectSheet, { WithStyles } from 'react-jss';
 import classnames from 'classnames';
-import Container from 'components/Container';
 import { Styles } from 'jss';
+import FormContainer from 'components/Form/FormContainer';
 
 const styles: Styles = {
   root: {
@@ -19,6 +19,7 @@ const styles: Styles = {
     paddingTop: '24px',
     paddingBottom: '32px',
     background: '#fff',
+    borderRadius: '4px',
     borderTop: '8px solid #22bff4',
     boxShadow: 'rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px',
     minHeight: '400px'
@@ -34,9 +35,9 @@ const styles: Styles = {
 
 const FormLayout: React.SFC<WithStyles<typeof styles>> = ({classes, children}) => (
   <div className={classnames(classes.root)}>
-    <Container className={classnames(classes.card)}>
+    <FormContainer className={classnames(classes.card)}>
       {children}
-    </Container>
+    </FormContainer>
   </div>
 );
 

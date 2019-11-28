@@ -11,7 +11,12 @@ const styles: Styles = {
     fontWeight: 600,
     fontSize: '1.25rem',
     lineHeight: '48px',
-    padding: '0 12px'
+    padding: '0 12px',
+    display: 'inline-block'
+    // whiteSpace: 'nowrap',
+    // textOverflow: 'ellipsis',
+    // overflow: 'hidden',
+    // maxWidth: '50%'
   }
 }
 

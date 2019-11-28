@@ -24,6 +24,7 @@ const styles: Styles = {
     zIndex: 1,
     width: '100%',
     minHeight: '1.3em',
+    fontSize: '0.9em',
     padding: '0px',
     boxSizing: 'content-box',
     outline: 'none',

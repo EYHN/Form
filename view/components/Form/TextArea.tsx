@@ -28,7 +28,8 @@ const styles: Styles = {
   },
   textarea: {
     position: 'relative',
-    fontSize: '0.95em',
+    fontSize: '1em',
+    lineHeight: 1.6,
     zIndex: 1,
     minHeight: '1.3em',
     width: '100%',

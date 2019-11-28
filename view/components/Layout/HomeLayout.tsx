@@ -6,6 +6,8 @@ import { Styles } from 'jss';
 import Button from 'components/Button';
 import Add from 'components/icons/Add';
 import { Link } from 'react-router-dom';
+import HomeAppBar from 'components/HomeAppBar';
+import Folder from 'components/icons/Folder';
 
 const styles: Styles = {
   root: {
@@ -70,19 +72,11 @@ const styles: Styles = {
     textAlign: 'left'
   },
   appbar: {
-    display: 'flex',
-    position: 'relative',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '10px 8px',
-    color: '#fff',
     paddingRight: 30,
     paddingLeft: 30,
     maxWidth: 1024,
     width: '100%',
-  },
-  full: {
-    flexGrow: 1
+    backgroundColor: 'transparent'
   },
   jumbotron: {
     display: 'flex',
@@ -105,15 +99,16 @@ const styles: Styles = {
     fontSize: '1.4rem',
     margin: '1em 0 2em 0'
   },
-  newButton: {
-    background: '#ff1744',
+  button: {
+    margin: '0 8px',
+    background: '#d32f2f',
     color: '#fff',
     fontSize: '0.9rem',
     borderRadius: '5px',
     padding: '0 15px',
     boxShadow: 'rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px',
     '&:active': {
-      background: '#ff1744'
+      background: '#d32f2f'
     }
   },
   footer: {
@@ -174,24 +169,23 @@ const styles: Styles = {
 };
 
 interface IHomeLayoutProps {
-  appbarleft: React.ReactNode;
-  appbarright: React.ReactNode;
   onClickNewForm: React.MouseEventHandler;
 }
 
-const HomeLayout: React.SFC<IHomeLayoutProps & WithStyles<typeof styles>> = ({classes, appbarleft, appbarright, onClickNewForm, children}) => (
+const HomeLayout: React.SFC<IHomeLayoutProps & WithStyles<typeof styles>> = ({classes, onClickNewForm, children}) => (
   <div className={classnames(classes.root)}>
     <header className={classes.header}>
-      <div className={classNames(classes.appbar)}>
-        {appbarleft}
-        <span className={classNames(classes.full)} />
-        {appbarright}
-      </div>
+      <HomeAppBar className={classes.appbar} />
     
       <div className={classes.jumbotron}>
         <h1 className={classes.jumbotronTitle}>网页表单</h1>
         <span className={classes.jumbotronSubTitle}>和&thinsp;Google Form&thinsp;一样好用，但更加安全的<wbr/>表单制作工具<wbr/>。</span>
-        <Button className={classes.newButton} shadow onClick={onClickNewForm}><Add width={22} /> 创建表单</Button>
+        <div>
+          <Link to="/panel/">
+            <Button className={classes.button} shadow onClick={onClickNewForm}><Folder width={22} /> 我的表单</Button>
+          </Link>
+          <Button className={classes.button} shadow onClick={onClickNewForm}><Add width={22} /> 创建表单</Button>
+        </div>
       </div>
     </header>
     <article className={classes.article}>

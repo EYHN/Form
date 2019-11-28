@@ -2,7 +2,7 @@ import ApiError from "./ApiError";
 import fetch from 'isomorphic-fetch';
 import NetworkError from "./NetworkError";
 import { IFormTemplate, IFormKey } from "@interface/Form";
-import { IApiNewFormRequest, IApiUpdateFormRequest, IApiNewFormResponse, IApiFetchFormResponse } from "@interface/Api/Form";
+import { IApiNewFormRequest, IApiUpdateFormRequest, IApiNewFormResponse, IApiFetchFormResponse, IApiUpdateFormResponse } from "@interface/Api/Form";
 
 export async function apiFetchForm(id: string): Promise<IApiFetchFormResponse> {
   let res;
@@ -47,7 +47,7 @@ export async function apiNewForm(template: IFormTemplate, key: IFormKey, date: s
   }
 }
 
-export async function apiUpdateForm(id: string, template: IFormTemplate, signFunc: (data: string) => string): Promise<IApiUpdateFormRequest> {
+export async function apiUpdateForm(id: string, template: IFormTemplate, signFunc: (data: string) => string): Promise<IApiUpdateFormResponse> {
   const body: IApiUpdateFormRequest = {
     template: template
   };

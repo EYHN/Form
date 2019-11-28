@@ -33,6 +33,7 @@ import WifiOff from 'components/icons/WifiOff';
 import ShareDialog from './ShareDialog';
 import { IFormTemplate } from '@interface/Form';
 import EditorPageResponses from './Responses';
+import Helmet from './Helmet';
 
 interface IState {
   currentTabName: string;
@@ -171,49 +172,52 @@ class EditorPage extends React.PureComponent<IProps, IState> {
   public render() {
     const { template, unlocked, error } = this.props;
   
-    return <EditorLayout
-      appbarleft={
-        <>
-          <AppBarIconButton icon={Back} onClick={this.handleBackButton}></AppBarIconButton>
-          <AppBarTitle>{template ? template.title : '加载中...'}</AppBarTitle>
-          <Tooltip tip='加密' dir='bottom'><AppBarIconButton icon={unlocked ? LockOpen : Lock}></AppBarIconButton></Tooltip>
-        </>
-      }
-      appbarright={
-        <>
-          <Tooltip tip='分享' dir='bottom'><AppBarIconButton icon={Share} onClick={this.handleOpenShareDialog}></AppBarIconButton></Tooltip>
-          <Tooltip tip='设置' dir='bottom'><AppBarIconButton icon={Settings} onClick={this.handleOpenSettingDialog}></AppBarIconButton></Tooltip>
-        </>
-      }
-      tabnames={['问题', '回复']}
-      tabvalue={this.state.currentTabName}
-      onTabChange={this.handleTabChange}
-      disabled={!unlocked}
-    >
-      {
-        error ?
-        this.renderErrorIndicator() :
-        template ?
-          this.state.currentTabName !== '回复' ?
-            this.renderEditor() :
-            this.renderResponses()
-          : <LoadingIndicator height='300px' />
-      }
-      <NoSSR>
-        {
-          template && this.state.settingDialog &&
-          this.renderSettingDialog()
+    return <>
+      <Helmet formTitle={template && template.title} />
+      <EditorLayout
+        appbarleft={
+          <>
+            <AppBarIconButton icon={Back} onClick={this.handleBackButton}></AppBarIconButton>
+            <AppBarTitle>{template ? template.title : '加载中...'}</AppBarTitle>
+            <Tooltip tip='加密' dir='bottom'><AppBarIconButton icon={unlocked ? LockOpen : Lock}></AppBarIconButton></Tooltip>
+          </>
         }
-        {
-          template && this.state.shareDialog &&
-          this.renderShareDialog()
+        appbarright={
+          <>
+            <Tooltip tip='分享' dir='bottom'><AppBarIconButton icon={Share} onClick={this.handleOpenShareDialog}></AppBarIconButton></Tooltip>
+            <Tooltip tip='设置' dir='bottom'><AppBarIconButton icon={Settings} onClick={this.handleOpenSettingDialog}></AppBarIconButton></Tooltip>
+          </>
         }
+        tabnames={['问题', '回复']}
+        tabvalue={this.state.currentTabName}
+        onTabChange={this.handleTabChange}
+        disabled={!unlocked}
+      >
         {
-          template && !unlocked &&
-            this.renderUnlockDialog()
+          error ?
+          this.renderErrorIndicator() :
+          template ?
+            this.state.currentTabName !== '回复' ?
+              this.renderEditor() :
+              this.renderResponses()
+            : <LoadingIndicator height='300px' />
         }
-      </NoSSR>
-    </EditorLayout>
+        <NoSSR>
+          {
+            template && this.state.settingDialog &&
+            this.renderSettingDialog()
+          }
+          {
+            template && this.state.shareDialog &&
+            this.renderShareDialog()
+          }
+          {
+            template && !unlocked &&
+              this.renderUnlockDialog()
+          }
+        </NoSSR>
+      </EditorLayout>
+    </>
   }
 }
 
