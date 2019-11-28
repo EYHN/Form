@@ -23,7 +23,7 @@ const styles: Styles = {
     position: 'relative',
     zIndex: 1,
     width: '100%',
-    minHeight: '1.3em',
+    minHeight: '1.44em',
     fontSize: '0.9em',
     padding: '0px',
     boxSizing: 'content-box',

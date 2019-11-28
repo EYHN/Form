@@ -7,7 +7,7 @@ const styles: Styles = {
   root: {
     display: 'block',
     position: 'relative',
-    lineHeight: 1.3,
+    lineHeight: 1,
     fontSize: '1em',
     '&>div': {
       display: 'inline-block',
@@ -29,9 +29,9 @@ const styles: Styles = {
   textarea: {
     position: 'relative',
     fontSize: '1em',
-    lineHeight: 1.6,
+    lineHeight: 1.44,
     zIndex: 1,
-    minHeight: '1.3em',
+    minHeight: '1.44em',
     width: '100%',
     padding: '0',
     outline: 'none',
