@@ -5,6 +5,8 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { IEditorPageState } from "containers/EditorPage/reducer";
 import { ICreateFormDialogState } from "containers/CreateFormDialog/reducer";
 import { IPanelPageState } from "containers/PanelPage/reducer";
+import keyCacheSaga from "service/keyCache/saga";
+import formCacheSaga from "service/formCache/saga";
 
 export interface IStore extends Store<IState> {
   injectedReducers: any;
@@ -52,6 +54,9 @@ export default function configureStore(initialState: any = {}) {
       store.replaceReducer(createReducer(store.injectedReducers));
     });
   }
+
+  store.runSaga(keyCacheSaga)
+  store.runSaga(formCacheSaga)
 
   return store;
 }
