@@ -45,7 +45,10 @@ class PanelPage extends React.PureComponent<Props, IState> {
 
   constructor(props: Props) {
     super(props);
-    loadPanelPage();
+  }
+
+  componentDidMount() {
+    this.props.loadPanelPage();
   }
 
   handleOpenCreateDialog = () => {
