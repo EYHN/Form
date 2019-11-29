@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
-import HomeLayout from 'components/Layout/HomeLayout';
+import HomeLayout from 'containers/HomePage/layout';
 import CreateFormDialog from 'containers/CreateFormDialog';
 import Helmet from './Helmet';
 

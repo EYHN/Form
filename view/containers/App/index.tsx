@@ -5,7 +5,7 @@ import NotFoundPage from 'containers/NotFoundPage';
 import FormPage from 'containers/FormPage/Loadable';
 import EditorPage from 'containers/EditorPage/Loadable';
 import HomePage from 'containers/HomePage/Loadable';
-import PanelPage from 'containers/PanelPage';
+import PanelPage from 'containers/PanelPage/Loadable';
 
 
 const App: React.SFC<{}> = () => (

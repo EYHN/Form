@@ -26,6 +26,9 @@ const styles: Styles = {
     cursor: 'pointer',
     verticalAlign: 'bottom'
   },
+  disabled: {
+    cursor:'default'
+  },
   label: {
     cursor: 'pointer',
     fontSize: '0.95em',
@@ -79,11 +82,11 @@ const Selection: React.SFC<ISelectionProps & WithStyles<typeof styles>> = (
           disabled={disabled}
           checked={checked}
           onClick={onClick}
-          className={classes.radio}
+          className={classNames(classes.radio, disabled && classes.disabled)}
         /> :
         <Checkbox
           disabled={disabled}
-          className={classes.checkbox}
+          className={classNames(classes.checkbox, disabled && classes.disabled)}
           checked={checked}
           onClick={onClick}
         />}

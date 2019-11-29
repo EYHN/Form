@@ -1,5 +1,5 @@
 import React from 'react';
-import EditorLayout from 'components/Layout/EditorLayout';
+import EditorLayout from 'containers/EditorPage/layout';
 import Editor from 'components/Form/Editor';
 import Settings from 'components/icons/Settings';
 import AppBarIconButton from 'components/AppBar/AppBarIconButton';

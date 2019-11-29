@@ -1,11 +1,10 @@
 import React from 'react';
-import FormLayout from 'components/Layout/FormLayout';
 import Form from 'components/Form';
 import { compose, Dispatch } from 'redux';
 import injectReducer from 'utils/injectReducer';
 import formPageReducer from './reducer';
 import { createSelector } from 'reselect';
-import { loadFormPage, submitFormPage, resetFormPage } from './actions';
+import { loadFormPage, submitFormPage, resetFormPage, unloadFormPage } from './actions';
 import { makeSelectFormPageId, makeSelectFormPageLoadingError, makeSelectFormPageFormData, makeSelectFormPageLoading, makeSelectFormPageSubmitting, makeSelectFormPageSubmittingError, makeSelectFormPageSubmited } from './selectors';
 import { $Call } from 'utils/types';
 import { RouteComponentProps } from 'react-router';
@@ -16,6 +15,7 @@ import { IFormValue, IFormMeta } from '@interface/Form';
 import SubmitSuccessPage from './success';
 import { validate } from 'validate';
 import Helmet from './Helmet';
+import FormLayout from './layout';
 
 interface IState {
   values: IFormValue;
@@ -34,7 +34,8 @@ const mapStateToProps = createSelector(
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onLoadFormPage: (id: string) => (dispatch(loadFormPage(id))),
+  onLoad: (id: string) => (dispatch(loadFormPage(id))),
+  onUnLoad: () => (dispatch(unloadFormPage())),
   onSubmit: (value: IFormValue) => (dispatch(submitFormPage(value))),
   onReset: () => (dispatch(resetFormPage()))
 });
@@ -48,7 +49,6 @@ type dispatchProps = $Call<typeof mapDispatchToProps>;
 
 type Props = stateProps & dispatchProps & IFormPageProps;
 
-
 class FormPage extends React.PureComponent<Props, IState> {
 
   state: IState = {
@@ -61,9 +61,12 @@ class FormPage extends React.PureComponent<Props, IState> {
   }
 
   componentDidMount() {
-    const { onLoadFormPage, match, id } = this.props;
-    if (id === null || id !== match.params.id)
-      onLoadFormPage(match.params.id);
+    const { onLoad: onLoadFormPage, match } = this.props;
+    onLoadFormPage(match.params.id);
+  }
+
+  componentWillUnmount() {
+    this.props.onUnLoad();
   }
 
   handleChange = (id: string, value: any) => {

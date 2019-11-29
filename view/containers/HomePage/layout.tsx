@@ -6,8 +6,9 @@ import { Styles } from 'jss';
 import Button from 'components/Button';
 import Add from 'components/icons/Add';
 import { Link } from 'react-router-dom';
-import HomeAppBar from 'components/HomeAppBar';
+import HomeAppBar from 'components/SiteAppBar';
 import Folder from 'components/icons/Folder';
+import SiteFooter from 'components/SiteFooter';
 
 const styles: Styles = {
   root: {
@@ -111,34 +112,6 @@ const styles: Styles = {
       background: '#d32f2f'
     }
   },
-  footer: {
-    padding: '6px 30px 50px',
-    background: '#1565c0',
-    color: 'rgba(255,255,255,0.8)'
-  },
-  footerBody: {
-    maxWidth: 1024,
-    position: 'relative',
-    margin: '0 auto',
-    fontSize: '0.9rem'
-  },
-  footerContent: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  footerTitle: {
-    marginTop: '24px',
-    marginBottom: '8px',
-    fontSize: '1rem',
-    color: '#fff',
-  },
-  footerLink: {
-    color: 'rgba(255,255,255,0.8)',
-    textDecoration: 'none',
-    '&:hover': {
-      textDecoration: 'underline',
-    }
-  },
   [`@media (max-width: 770px)`]: {
     appbar: {
       paddingRight: 16,
@@ -210,32 +183,7 @@ const HomeLayout: React.SFC<IHomeLayoutProps & WithStyles<typeof styles>> = ({cl
       </div>
     </article>
     {children}
-    <footer className={classes.footer}>
-      <div className={classes.footerBody}>
-        <div className={classes.footerContent}>
-          <div>
-            <p className={classes.footerTitle}>
-              <strong>
-                <span style={{marginRight: '4px'}}>The</span>
-                <span style={{marginRight: '2px'}}>Form</span>
-              </strong>
-              <span style={{fontSize: '0.7em', opacity: 0.9, verticalAlign: 'super'}}>.app</span>
-            </p>
-            <p><Link to='/about' className={classes.footerLink}>关于本站</Link></p>
-            <p><Link to='/license' className={classes.footerLink}>开源协议</Link></p>
-            <p><a href='https://github.com/EYHN/Form' className={classes.footerLink}>Github</a></p>
-          </div>
-          <div>
-            <p className={classes.footerTitle}><strong>EYHN</strong> <span style={{fontSize: '0.7em', opacity: 0.9, verticalAlign: 'super'}}>Powered</span></p>
-            <p><a href='http://eyhn.in' className={classes.footerLink}>服务状态</a></p>
-            <p><a href='http://eyhn.in' className={classes.footerLink}>关于&thinsp;EYHN</a></p>
-          </div>
-          <span/>
-        </div>
-        <br/>
-        <p>Copyright © 2019 EYHN</p>
-      </div>
-    </footer>
+    <SiteFooter />
   </div>
 );
 

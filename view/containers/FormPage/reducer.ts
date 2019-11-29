@@ -1,6 +1,6 @@
 import * as actions from './actions';
 import { $Call, $Values } from "utils/types";
-import { LOAD_FORM_PAGE, LOAD_FORM_PAGE_SUCCESS, LOAD_FORM_PAGE_ERROR, SUBMIT_FORM_PAGE, SUBMIT_FORM_PAGE_ERROR, SUBMIT_FORM_PAGE_SUCCESS, RESET_FORM_PAGE } from "./constants";
+import { LOAD_FORM_PAGE, LOAD_FORM_PAGE_SUCCESS, LOAD_FORM_PAGE_ERROR, SUBMIT_FORM_PAGE, SUBMIT_FORM_PAGE_ERROR, SUBMIT_FORM_PAGE_SUCCESS, RESET_FORM_PAGE, UNLOAD_FORM_PAGE } from "./constants";
 import { IForm } from '@interface/Form';
 export type FormPageActions = $Call<$Values<typeof actions>>;
 
@@ -32,6 +32,8 @@ export default function formPageReducer(state = initialState, action: FormPageAc
         id: action.payload,
         loading: true
       };
+    case UNLOAD_FORM_PAGE:
+      return initialState;
     case LOAD_FORM_PAGE_SUCCESS:
       return {
         ...state,

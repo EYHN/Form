@@ -5,6 +5,7 @@ import AppBar from 'components/AppBar';
 import Tabs from 'components/Tabs';
 import { Styles } from 'jss';
 import FormContainer from 'components/Form/FormContainer';
+import TextFooter from 'components/TextFooter';
 
 const styles: Styles = {
   root: {
@@ -17,7 +18,7 @@ const styles: Styles = {
   card: {
     position: 'relative',
     zIndex: 2,
-    marginBottom: '64px',
+    marginBottom: '32px',
     marginTop: '0px',
     borderRadius: '4px',
     background: '#fff',
@@ -33,6 +34,9 @@ const styles: Styles = {
     height: '48px',
     margin: '0 -30px',
     borderBottom: '1px solid #e0e0e0',
+  },
+  footer: {
+    marginBottom: '32px'
   },
   [`@media (min-width: 770px)`]: {
     appbar: {
@@ -60,6 +64,9 @@ const EditorLayout: React.SFC<IEditorLayoutProps & WithStyles<typeof styles>> = 
       <Tabs className={classes.tabs} names={tabnames} value={tabvalue} onChange={onTabChange} disabled={disabled}></Tabs>
       {children}
     </FormContainer>
+    <TextFooter className={classes.footer}>
+      根据 <a href='https://www.gnu.org/licenses/agpl-3.0.html' target='_blank'>AGPL 许可证</a> 发布。Copyright © 2019 <a href='https://theform.app'>The Form</a>
+    </TextFooter>
   </div>
 );
 

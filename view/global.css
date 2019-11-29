@@ -20,6 +20,15 @@ abbr, address, article, aside, audio, b, blockquote, body, canvas, caption, cite
   line-height: 1.6;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 *:disabled {
   cursor: auto
 }

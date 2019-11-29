@@ -13,7 +13,8 @@ import ToolBarButton from 'components/ToolBar/ToolBarButton';
 import Add from 'components/icons/Add';
 import FormCard from 'components/FormCard';
 import { IForm } from '@interface/Form';
-import HomeAppBar from 'components/HomeAppBar';
+import HomeAppBar from 'components/SiteAppBar';
+import TextFooter from 'components/TextFooter';
 
 const styles: Styles = {
   root: {
@@ -30,11 +31,11 @@ const styles: Styles = {
     boxShadow: 'rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px',
     minHeight: '500px',
     borderRadius: '8px',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    marginBottom: 32
   },
   main: {
     padding: '48px 32px',
-    marginBottom: '64px',
   },
   toolbar: {
     minHeight: '56px',
@@ -74,7 +75,6 @@ const styles: Styles = {
   [`@media (max-width: 690px)`]: {
     formListItem: {
       width: '50%',
-
     },
     main: {
       padding: '0',
@@ -132,6 +132,7 @@ const PanelLayout: React.SFC<IPanelLayoutProps & WithStyles<typeof styles>> = ({
           }
         </div>
       </Container>
+      <TextFooter />
     </main>
   </div>
 );

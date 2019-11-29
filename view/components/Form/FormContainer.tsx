@@ -19,7 +19,7 @@ const styles = {
   }
 };
 
-const FormContainer: React.SFC<WithStyles<typeof styles> & {className: string}> = ({className, classes, children}) => (
+const FormContainer: React.SFC<WithStyles<typeof styles> & {className?: string}> = ({className, classes, children}) => (
   <div className={classnames(classes.container, className)}>
     {children}
   </div>
