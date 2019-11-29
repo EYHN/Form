@@ -1,17 +1,20 @@
-import Redisdb from "./Redisdb";
-import Memorydb from "./Memorydb";
-import Leveldb from "./Leveldb";
+import Keyv from 'keyv';
 
-
-let database: Redisdb | Memorydb | Leveldb;
-
-if (process.env.USE_MEMORYDB || process.env.NODE_ENV === 'development') {
-  database = new Memorydb(require('./developmentDB.json'))
-} else {
-  database = new Leveldb(process.env.DATABASE || './db')
+export class Database {
+  url: string;
+  options: Keyv.Options<any>;
+  database: Keyv;
+  constructor(url?: string, options?: Keyv.Options<any>) {
+    this.url = url;
+    this.options = options;
+    this.database = new Keyv(url, options);
+  }
+  get = (key: string) => this.database.get(key);
+  set = (key: string, value: string, ttl?: number) => this.database.set(key, value, ttl);
+  delete = (key: string) => this.database.delete(key);
+  namespace = (namespace: string) => new Database(this.url, {...this.options, namespace});
 }
 
-export default database;
-export const databaseGet = database.get as (key: string) => Promise<string>;
-export const databaseSet = database.set as (key: string, value: string) => Promise<boolean>;
-export const databaseDelete = database.delete as (key: string) => Promise<boolean>;
+const db = new Database(process.env.DATABASE_URL, { adapter: 'postgres' });
+
+export default db;

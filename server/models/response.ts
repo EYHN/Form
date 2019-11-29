@@ -1,5 +1,7 @@
-import { databaseGet, databaseSet } from "./database";
+import database from "./database";
 import { IResponse } from "@interface/Response";
+
+const db = database.namespace('response');
 
 export function parseResponse(response: string): IResponse {
   if (response) {
@@ -8,12 +10,12 @@ export function parseResponse(response: string): IResponse {
   return null;
 }
 
-export const responseGet = async (id: string) => parseResponse(await databaseGet(`response:${id}`));
+export const responseGet = async (id: string) => parseResponse(await db.get(`response:${id}`));
 
 export const responseCreate = async (id: string, response: IResponse) => {
-  await databaseSet(`response:${id}`, JSON.stringify(response));
+  await db.set(`response:${id}`, JSON.stringify(response));
 }
 
 export const responseUpdate = async (id: string, response: IResponse) => {
-  await databaseSet(`response:${id}`, JSON.stringify(response));
+  await db.set(`response:${id}`, JSON.stringify(response));
 }

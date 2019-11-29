@@ -1,5 +1,7 @@
-import { databaseGet, databaseSet } from "./database";
+import database from "./database";
 import { IFormTemplate, IForm } from "@interface/Form";
+
+const db = database.namespace('form');
 
 function parseResponses(responses: string): string[] {
   return responses ? responses.split(',') : [];
@@ -13,10 +15,10 @@ function stringifyResponses(responses: string[]): string {
   return responses.join(',');
 }
 
-export const formGet = async (id: string) => parseForm(await databaseGet(`form:${id}`));
-export const formSet = async (id: string, form: IForm) => await databaseSet(`form:${id}`, JSON.stringify(form));
-export const formGetResponses = async (id: string) => parseResponses(await databaseGet(`form:responses:${id}`));
-export const formSetResponses = async (id: string, responses: string[]) => await databaseSet(`form:responses:${id}`, stringifyResponses(responses));
+export const formGet = async (id: string) => parseForm(await db.get(`form:${id}`));
+export const formSet = async (id: string, form: IForm) => await db.set(`form:${id}`, JSON.stringify(form));
+export const formGetResponses = async (id: string) => parseResponses(await db.get(`form:responses:${id}`));
+export const formSetResponses = async (id: string, responses: string[]) => await db.set(`form:responses:${id}`, stringifyResponses(responses));
 
 export const formCreate = async (id: string, form: IForm) => {
   await formSet(id, form);
