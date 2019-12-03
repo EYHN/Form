@@ -1,8 +1,8 @@
 import * as actions from './actions';
-import { $Call, $Values } from "utils/types";
+import { $Values } from "utils/types";
 import { IForm } from '@interface/Form';
 import { LOAD_PANEL_PAGE_SUCCESS, LOAD_PANEL_PAGE, LOAD_PANEL_PAGE_ERROR, DELETE_SAVED_FORMS } from './constants';
-export type PanelPageActions = $Call<$Values<typeof actions>>;
+export type PanelPageActions = ReturnType<$Values<typeof actions>>;
 
 export interface IPanelPageState {
   forms: IForm[];

@@ -6,7 +6,6 @@ import { Styles } from "jss";
 import FormAvatar from "components/FormAvatar";
 import { createSelector } from 'reselect';
 import { makeSelectEditorPageUnlocked, makeSelectEditorPageUnlockingError, makeSelectEditorPageFormTemplate, makeSelectEditorPageFormDate } from './selectors';
-import { $Call } from 'utils/types';
 import { unlockEditorPage } from './actions';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
@@ -52,8 +51,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 interface IUnlockDialogProps {
 }
 
-type stateProps = $Call<typeof mapStateToProps>;
-type dispatchProps = $Call<typeof mapDispatchToProps>;
+type stateProps = ReturnType<typeof mapStateToProps>;
+type dispatchProps = ReturnType<typeof mapDispatchToProps>;
 
 type IProps = stateProps & dispatchProps & IUnlockDialogProps & WithStyles<typeof styles>;
 

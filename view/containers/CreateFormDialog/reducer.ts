@@ -1,8 +1,8 @@
 import * as actions from './actions';
-import { $Call, $Values } from "utils/types";
+import { $Values } from "utils/types";
 import { CREATE_NEW_FORM, CREATE_NEW_FORM_SUCCESS, CREATE_NEW_FORM_ERROR, CLEAR_NEW_FORM_STATE } from "./constants";
 import { IForm } from '@interface/Form';
-export type CreateFormDialogActions = $Call<$Values<typeof actions>>;
+export type CreateFormDialogActions = ReturnType<$Values<typeof actions>>;
 
 export interface ICreateFormDialogState {
   creating: boolean;

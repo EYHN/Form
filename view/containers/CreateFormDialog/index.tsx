@@ -1,7 +1,6 @@
 import React from 'react';
 import { IFormTemplate } from '@interface/Form';
 import { Dispatch, compose } from 'redux';
-import { $Call } from 'utils/types';
 import { makeSelectCreateFormDialogError, makeSelectCreateFormDialogCreating, makeSelectCreateFormDialogCreated, makeSelectCreateFormDialogForm } from './selectors';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -38,8 +37,8 @@ interface ICreateFormDialogProps {
   onClose?: () => void;
 }
 
-type stateProps = $Call<typeof mapStateToProps>;
-type dispatchProps = $Call<typeof mapDispatchToProps>;
+type stateProps = ReturnType<typeof mapStateToProps>;
+type dispatchProps = ReturnType<typeof mapDispatchToProps>;
 
 type Props = stateProps & dispatchProps & ICreateFormDialogProps;
 

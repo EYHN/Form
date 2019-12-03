@@ -89,7 +89,8 @@ export const image = {
     options: {
       limit: 8192,
       name: '[path][name].[ext]',
-      outputPath: 'images/'
+      outputPath: 'images/',
+      esModule: false
     }
   }]
 }

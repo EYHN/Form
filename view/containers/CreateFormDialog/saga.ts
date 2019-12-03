@@ -2,11 +2,11 @@ import { CREATE_NEW_FORM } from "./constants";
 import { put, takeEvery, call } from 'redux-saga/effects';
 import { createNewForm, newFormCreated, newFormCreatingError } from "./actions";
 import { apiNewForm } from "api/Form";
-import { $Call } from "utils/types";
+
 import crypto from '@eyhn/crypto';
 import { IApiNewFormResponse } from "@interface/Api/Form";
 
-export function* createForm(action: $Call<typeof createNewForm>) {
+export function* createForm(action: ReturnType<typeof createNewForm>) {
   try {
     const { n: publickey, d: privateKey } = crypto.rsa.generate(1024, 10001);
 

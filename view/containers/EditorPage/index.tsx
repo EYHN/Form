@@ -12,7 +12,6 @@ import { makeSelectEditorPageFormId, makeSelectEditorPageFormTemplate, makeSelec
 import { createSelector } from 'reselect';
 import { Dispatch, compose } from 'redux';
 import { loadEditorPage, updateEditorPageFormTemplate, unlockEditorPage } from './actions';
-import { $Call } from 'utils/types';
 import { connect } from 'react-redux';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
@@ -60,8 +59,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 interface IEditorPageProps extends RouteComponentProps<{id: string}> {
 }
 
-type stateProps = $Call<typeof mapStateToProps>;
-type dispatchProps = $Call<typeof mapDispatchToProps>;
+type stateProps = ReturnType<typeof mapStateToProps>;
+type dispatchProps = ReturnType<typeof mapDispatchToProps>;
 
 type IProps = stateProps & dispatchProps & IEditorPageProps;
 

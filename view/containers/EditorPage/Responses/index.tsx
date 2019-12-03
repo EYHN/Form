@@ -1,7 +1,6 @@
 import React from 'react';
 import { createSelector } from 'reselect';
 import { Dispatch, compose } from 'redux';
-import { $Call } from 'utils/types';
 import { connect } from 'react-redux';
 import { makeSelectResponses, makeSelectLoadingResponses, makeSelectLoadingResponsesError } from './selectors';
 import { loadResponses } from './actions';
@@ -27,8 +26,8 @@ interface IEditorPageResponsesProps {
   formId: string;
 }
 
-type stateProps = $Call<typeof mapStateToProps>;
-type dispatchProps = $Call<typeof mapDispatchToProps>;
+type stateProps = ReturnType<typeof mapStateToProps>;
+type dispatchProps = ReturnType<typeof mapDispatchToProps>;
 
 type IProps = stateProps & dispatchProps & IEditorPageResponsesProps;
 

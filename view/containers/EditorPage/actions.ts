@@ -1,17 +1,17 @@
 import { LOAD_EDITOR_PAGE, LOAD_EDITOR_PAGE_SUCCESS, LOAD_EDITOR_PAGE_ERROR, UNLOCK_EDITOR_PAGE, UPDATE_EDITOR_PAGE_FORM_TEMPLATE, SAVE_EDITOR_PAGE, SAVE_EDITOR_PAGE_SUCCESS, SAVE_EDITOR_PAGE_ERROR, UNLOCK_EDITOR_PAGE_SUCCESS, UNLOCK_EDITOR_PAGE_ERROR } from './constants';
-import { createAction } from 'typesafe-actions';
+import { action } from 'typesafe-actions';
 import { IFormTemplate, IForm } from '@interface/Form';
 
-export const loadEditorPage = createAction(LOAD_EDITOR_PAGE, resolve => (id: string) => resolve(id));
-export const editorPageLoaded = createAction(LOAD_EDITOR_PAGE_SUCCESS, resolve => (data: IForm) => resolve(data));
-export const editorPageLoadingError = createAction(LOAD_EDITOR_PAGE_ERROR, resolve => (error: Error) => resolve(error));
+export const loadEditorPage = (id: string) => action(LOAD_EDITOR_PAGE, id);
+export const editorPageLoaded = (data: IForm) => action(LOAD_EDITOR_PAGE_SUCCESS, data);
+export const editorPageLoadingError = (error: Error) => action(LOAD_EDITOR_PAGE_ERROR, error);
 
-export const updateEditorPageFormTemplate = createAction(UPDATE_EDITOR_PAGE_FORM_TEMPLATE, resolve => (template: IFormTemplate) => resolve(template));
+export const updateEditorPageFormTemplate = (template: IFormTemplate) => action(UPDATE_EDITOR_PAGE_FORM_TEMPLATE, template);
 
-export const unlockEditorPage = createAction(UNLOCK_EDITOR_PAGE, resolve => (password: string) => resolve(password));
-export const editorPageUnlocked = createAction(UNLOCK_EDITOR_PAGE_SUCCESS, resolve => (key: {privateKey: string, aesKey: string}) => resolve(key));
-export const editorPageUnlockingError = createAction(UNLOCK_EDITOR_PAGE_ERROR, resolve => (error: Error) => resolve(error));
+export const unlockEditorPage = (password: string) => action(UNLOCK_EDITOR_PAGE, password);
+export const editorPageUnlocked = (key: {privateKey: string, aesKey: string}) => action(UNLOCK_EDITOR_PAGE_SUCCESS, key);
+export const editorPageUnlockingError = (error: Error) => action(UNLOCK_EDITOR_PAGE_ERROR, error);
 
-export const saveEditorPage = createAction(SAVE_EDITOR_PAGE);
-export const editorPageSaved = createAction(SAVE_EDITOR_PAGE_SUCCESS, resolve => (data: IForm) => resolve(data));
-export const editorPageSavingError = createAction(SAVE_EDITOR_PAGE_ERROR, resolve => (error: Error) => resolve(error));
+export const saveEditorPage = () => action(SAVE_EDITOR_PAGE);
+export const editorPageSaved = (data: IForm) => action(SAVE_EDITOR_PAGE_SUCCESS, data);
+export const editorPageSavingError = (error: Error) => action(SAVE_EDITOR_PAGE_ERROR, error);

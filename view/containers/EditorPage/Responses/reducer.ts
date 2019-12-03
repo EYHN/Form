@@ -1,8 +1,8 @@
 import * as actions from './actions';
-import { $Call, $Values } from "utils/types";
+import { $Values } from "utils/types";
 import { LOAD_FORM_RESPONSES, LOAD_FORM_RESPONSES_ERROR, LOAD_FORM_RESPONSES_SUCCESS } from './constants';
 import { IDecryptedResponse } from './actions';
-export type EditorPageResponsesActions = $Call<$Values<typeof actions>>;
+export type EditorPageResponsesActions = ReturnType<$Values<typeof actions>>;
 
 export interface IEditorPageResponsesState {
   loadingResponses: boolean;

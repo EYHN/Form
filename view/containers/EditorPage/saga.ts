@@ -2,7 +2,6 @@ import { LOAD_EDITOR_PAGE, UPDATE_EDITOR_PAGE_FORM_TEMPLATE, SAVE_EDITOR_PAGE_ER
 import { put, takeEvery, call, select, takeLatest, take, debounce } from 'redux-saga/effects';
 import { loadEditorPage, editorPageLoaded, editorPageLoadingError, saveEditorPage, editorPageSaved, editorPageSavingError, unlockEditorPage, editorPageUnlockingError, editorPageUnlocked } from "./actions";
 import { apiFetchForm, apiUpdateForm } from "api/Form";
-import { $Call } from "utils/types";
 import { makeSelectEditorPagePrivateKey, makeSelectEditorPageFormTemplate, makeSelectEditorPagePublicKey, makeSelectEditorPageFormKey, makeSelectEditorPageFormId } from "./selectors";
 import { createSelector } from "reselect";
 import crypto from '@eyhn/crypto';
@@ -10,7 +9,7 @@ import { IForm, IFormTemplate } from "@interface/Form";
 import editorPageResponsesSaga from "./Responses/saga";
 import { IApiUpdateFormResponse } from "@interface/Api/Form";
 
-export function* loadFormSaga(action: $Call<typeof loadEditorPage>) {
+export function* loadFormSaga(action: ReturnType<typeof loadEditorPage>) {
   try {
     const data: IForm = yield call(apiFetchForm, action.payload);
     yield put(editorPageLoaded(data));
@@ -19,7 +18,7 @@ export function* loadFormSaga(action: $Call<typeof loadEditorPage>) {
   }
 }
 
-export function* unlockFormSaga(action: $Call<typeof unlockEditorPage>) {
+export function* unlockFormSaga(action: ReturnType<typeof unlockEditorPage>) {
   try {
     const password = action.payload;
 

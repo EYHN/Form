@@ -1,6 +1,5 @@
 import { LOAD_EDITOR_PAGE_SUCCESS, UNLOCK_EDITOR_PAGE_SUCCESS } from "containers/EditorPage/constants";
 import { takeEvery, select, call, put } from "redux-saga/effects";
-import { $Call } from "utils/types";
 import { editorPageLoaded, editorPageUnlocked } from "containers/EditorPage/actions";
 import { makeSelectEditorPageFormId } from "containers/EditorPage/selectors";
 import { keyCacheGet, keyCacheDelete, keyCacheCreate, IKeyCache } from "models/keyCache";
@@ -8,7 +7,7 @@ import crypto from '@eyhn/crypto';
 import { CREATE_NEW_FORM_SUCCESS } from "containers/CreateFormDialog/constants";
 import { newFormCreated } from "containers/CreateFormDialog/actions";
 
-export function* formLoadedSaga(action: $Call<typeof editorPageLoaded>) {
+export function* formLoadedSaga(action: ReturnType<typeof editorPageLoaded>) {
   const form = action.payload;
   // read private key cache
   const keyCache: IKeyCache = yield call(keyCacheGet, form.id)
@@ -36,7 +35,7 @@ export function* formLoadedSaga(action: $Call<typeof editorPageLoaded>) {
   }
 }
 
-export function* formUnlockedSaga(action: $Call<typeof editorPageUnlocked>) {
+export function* formUnlockedSaga(action: ReturnType<typeof editorPageUnlocked>) {
   // save private key
   const formId = makeSelectEditorPageFormId()(yield select());
   const privateKey = action.payload.privateKey;
@@ -44,7 +43,7 @@ export function* formUnlockedSaga(action: $Call<typeof editorPageUnlocked>) {
   yield call(keyCacheCreate, formId, privateKey, aesKey);
 }
 
-export function* newFormCreatedSaga(action: $Call<typeof newFormCreated>) {
+export function* newFormCreatedSaga(action: ReturnType<typeof newFormCreated>) {
   const formId = action.payload.form.id;
   const privateKey = action.payload.privateKey;
   const aesKey = action.payload.aesKey;

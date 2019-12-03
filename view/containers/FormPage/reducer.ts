@@ -1,8 +1,8 @@
 import * as actions from './actions';
-import { $Call, $Values } from "utils/types";
+import { $Values } from "utils/types";
 import { LOAD_FORM_PAGE, LOAD_FORM_PAGE_SUCCESS, LOAD_FORM_PAGE_ERROR, SUBMIT_FORM_PAGE, SUBMIT_FORM_PAGE_ERROR, SUBMIT_FORM_PAGE_SUCCESS, RESET_FORM_PAGE, UNLOAD_FORM_PAGE } from "./constants";
 import { IForm } from '@interface/Form';
-export type FormPageActions = $Call<$Values<typeof actions>>;
+export type FormPageActions = ReturnType<$Values<typeof actions>>;
 
 export interface IFormPageState {
   id: string;

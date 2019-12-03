@@ -6,7 +6,6 @@ import formPageReducer from './reducer';
 import { createSelector } from 'reselect';
 import { loadFormPage, submitFormPage, resetFormPage, unloadFormPage } from './actions';
 import { makeSelectFormPageId, makeSelectFormPageLoadingError, makeSelectFormPageFormData, makeSelectFormPageLoading, makeSelectFormPageSubmitting, makeSelectFormPageSubmittingError, makeSelectFormPageSubmited } from './selectors';
-import { $Call } from 'utils/types';
 import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import injectSaga from 'utils/injectSaga';
@@ -44,8 +43,8 @@ interface IFormPageProps extends RouteComponentProps<{ id: string }> {
 }
 
 
-type stateProps = $Call<typeof mapStateToProps>;
-type dispatchProps = $Call<typeof mapDispatchToProps>;
+type stateProps = ReturnType<typeof mapStateToProps>;
+type dispatchProps = ReturnType<typeof mapDispatchToProps>;
 
 type Props = stateProps & dispatchProps & IFormPageProps;
 

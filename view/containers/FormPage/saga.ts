@@ -2,14 +2,13 @@ import { LOAD_FORM_PAGE, SUBMIT_FORM_PAGE } from "./constants";
 import { put, takeEvery, call, takeLeading, select } from 'redux-saga/effects';
 import { formPageLoadingError, loadFormPage, formPageLoaded, submitFormPage, formPageSubmittingError, formPageSubmited } from "./actions";
 import { apiFetchForm } from "api/Form";
-import { $Call } from "utils/types";
 import { IForm } from "@interface/Form";
 import crypto from '@eyhn/crypto';
 import { apiNewFormResponse } from "api/Response";
 import { createSelector } from "reselect";
 import { makeSelectFormPageId, makeSelectFormPageFormData } from "./selectors";
 
-export function* getForm(action: $Call<typeof loadFormPage>) {
+export function* getForm(action: ReturnType<typeof loadFormPage>) {
   try {
     const data: IForm = yield call(apiFetchForm, action.payload);
     yield put(formPageLoaded(data));
@@ -18,7 +17,7 @@ export function* getForm(action: $Call<typeof loadFormPage>) {
   }
 }
 
-export function* submitFormSaga(action: $Call<typeof submitFormPage>) {
+export function* submitFormSaga(action: ReturnType<typeof submitFormPage>) {
   try {
     const selector = createSelector(
       makeSelectFormPageId(),

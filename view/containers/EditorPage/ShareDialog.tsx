@@ -6,7 +6,6 @@ import TextInput from "components/Form/TextInput";
 import Tabs from "components/Tabs";
 import { makeSelectEditorPagePublicUrl, makeSelectEditorPageFormTemplate } from "./selectors";
 import { createSelector } from "reselect";
-import { $Call } from "utils/types";
 import { connect } from "react-redux";
 
 const styles: Styles = {
@@ -64,7 +63,7 @@ interface IShareDialogProps {
   onClose?: () => void;
 }
 
-type stateProps = $Call<typeof mapStateToProps>;
+type stateProps = ReturnType<typeof mapStateToProps>;
 
 type IProps = stateProps & IShareDialogProps & WithStyles<typeof styles>;
 
