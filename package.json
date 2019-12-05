@@ -1,13 +1,13 @@
 {
   "name": "form",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha",
   "main": "index.js",
   "repository": "https://github.com/EYHN/Form.git",
   "author": "eyhn <cneyhn@gmail.com>",
   "license": "AGPL-3.0",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "npm run clean && npm run build:csr & npm run build:ssr & npm run build:server",
+    "build": "npm run clean && npm run build:csr && npm run build:ssr && npm run build:server",
     "build:server": "tsc --build ./server/tsconfig.json",
     "build:csr": "cross-env NODE_ENV=production webpack --config build/webpack.config.csr.ts",
     "build:ssr": "cross-env NODE_ENV=production webpack --config build/webpack.config.ssr.ts",
