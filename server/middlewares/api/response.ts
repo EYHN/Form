@@ -22,8 +22,6 @@ responseAPI.get('/form/:id/responses', async (ctx) => {
 
   const responseIds = await formGetResponses(id);
 
-  console.log(responseIds)
-
   const responses = await Promise.all(responseIds.map(id => responseGet(id)));
 
   ctx.body = {

@@ -23,7 +23,7 @@ const styles: Styles = {
     background: '#fff',
     borderRadius: '4px',
     overflow: 'hidden',
-    marginTop: '3em',
+    margin: '3em 8px',
     maxWidth: '592px',
     width: '100%'
   },

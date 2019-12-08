@@ -13,7 +13,8 @@ const styles: Styles = {
   button: {
     height: '48px',
     minWidth: '64px',
-    fontWeight: 500
+    fontWeight: 500,
+    fontSize: '0.9em'
   }
 }
 

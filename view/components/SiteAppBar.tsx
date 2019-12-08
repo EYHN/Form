@@ -19,12 +19,12 @@ interface HomeAppBarProps {
 const HomeAppBar: React.SFC<WithStyles<typeof styles> & HomeAppBarProps> = ({ classes, className }) => (
   <AppBar
     className={className}
-    left={<Link className={classes.title} to="/"><AppBarTitle>The Form</AppBarTitle></Link>}
+    left={<Link className={classes.title} to='/'><AppBarTitle>The Form</AppBarTitle></Link>}
     right={
       <>
-        <AppBarButton>博客</AppBarButton>
-        <AppBarButton>支持</AppBarButton>
-        <AppBarButton>关于</AppBarButton>
+        <Link to='/blog'><AppBarButton>博客</AppBarButton></Link>
+        <Link to='/blog'><AppBarButton>支持</AppBarButton></Link>
+        <Link to='/blog'><AppBarButton>关于</AppBarButton></Link>
       </>
     }
   />

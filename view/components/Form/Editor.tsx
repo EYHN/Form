@@ -178,7 +178,7 @@ class Editor extends React.PureComponent<IEditorProps & WithStyles<typeof styles
       form: newForm
     });
   }
-
+  
   handleDelete = (id: string) => {
     if (typeof this.props.onChange !== 'function') return;
     const index = this.props.template.form.findIndex(template => template.id === id);

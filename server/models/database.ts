@@ -15,8 +15,6 @@ export class Database {
   namespace = (namespace: string) => new Database(this.url, {...this.options, namespace});
 }
 
-const db = (process.env.NODE_ENV === 'development' || process.env.DATABASE === 'memory') ?
-  new Database():
-  new Database(process.env.DATABASE_URL, { adapter: 'postgres' });
+const db = new Database(process.env.DATABASE_URL);
 
 export default db;

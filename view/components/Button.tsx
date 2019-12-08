@@ -6,6 +6,7 @@ import { Styles } from 'jss';
 const styles: Styles = {
   button: {
     display: 'inline-block',
+    fontSize: '1em',
     height: '36px',
     lineHeight: '36px',
     minWidth: '64px',

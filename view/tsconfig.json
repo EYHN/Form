@@ -15,7 +15,8 @@
         "../node_modules/@types"
     ],
     "paths": {
-      "@interface/*": ["../interface/*"]
+      "@interface/*": ["../interface/*"],
+      "config": ["../config.ts"]
     }
   },
   "include": [

@@ -151,13 +151,13 @@ const HomeLayout: React.SFC<IHomeLayoutProps & WithStyles<typeof styles>> = ({cl
       <HomeAppBar className={classes.appbar} />
     
       <div className={classes.jumbotron}>
-        <h1 className={classes.jumbotronTitle}>网页表单</h1>
-        <span className={classes.jumbotronSubTitle}>和&thinsp;Google Form&thinsp;一样好用，但更加安全的<wbr/>表单制作工具<wbr/>。</span>
+        <h1 className={classes.jumbotronTitle}>网页问卷</h1>
+        <span className={classes.jumbotronSubTitle}>和&thinsp;Google Form&thinsp;一样好用，但更加安全的<wbr/>问卷制作工具<wbr/>。</span>
         <div>
           <Link to="/panel/">
-            <Button className={classes.button} shadow onClick={onClickNewForm}><Folder width={22} /> 我的表单</Button>
+            <Button className={classes.button} shadow onClick={onClickNewForm}><Folder width={22} /> 我的问卷</Button>
           </Link>
-          <Button className={classes.button} shadow onClick={onClickNewForm}><Add width={22} /> 创建表单</Button>
+          <Button className={classes.button} shadow onClick={onClickNewForm}><Add width={22} /> 创建问卷</Button>
         </div>
       </div>
     </header>
@@ -165,14 +165,14 @@ const HomeLayout: React.SFC<IHomeLayoutProps & WithStyles<typeof styles>> = ({cl
       <div className={classNames(classes.articleBody, classes.articleLeftBody)}>
         <img className={classNames(classes.articleImg, classes.articleImg1)} src={require('./macbookpro13_front.png')}></img><br/>
         <h1 className={classes.articleHeader}>我们尊重用户的隐私</h1><br/>
-        <p className={classes.articleMessage}>我们保证不会偷窥表单填写的内容。每一份表单都经过加密处理，只有您本人可以解密查看，详情查看 安全性。</p>
+        <p className={classes.articleMessage}>我们保证不会偷窥问卷填写的内容。每一份问卷都经过加密处理，只有您本人可以解密查看，详情查看 安全性。</p>
       </div>
     </article>
     <article className={classes.article}>
       <div className={classNames(classes.articleBody, classes.articleRightBody)}>
         <img className={classNames(classes.articleImg, classes.articleImg2)} src={require('./xs.png')}></img><br/>
         <h1 className={classes.articleHeader}>任何设备</h1><br/>
-        <p className={classes.articleMessage}>我们尊重用户的自由，您可以将本软件用于任何用途，也随时可以下载到整个系统的源代码，整个系统运行公开透明。</p>
+        <p className={classes.articleMessage}>我们对于移动设备和老浏览器做特殊优化，用户应该可以在任何设备上填写问卷。</p>
       </div>
     </article>
     <article className={classes.article}>

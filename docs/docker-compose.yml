@@ -1,0 +1,33 @@
+version: '3.5'
+
+services:
+  db:
+    image: postgres:alpine
+    restart: unless-stopped
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: theform
+      POSTGRES_USER: theform
+
+  theform:
+    image: eyhn/theform
+    restart: unless-stopped
+    depends_on: 
+      - db
+    environment:
+      - DATABASE_URL=postgresql://theform:theform@db:5432/theform
+      - VIRTUAL_HOST=theform.app
+
+  proxy: 
+    image: jwilder/nginx-proxy:alpine
+    restart: unless-stopped
+    environment:
+      - DEFAULT_HOST=theform.app
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro 
+    ports:
+      - 80:80 
+
+volumes:
+  database:

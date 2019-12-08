@@ -122,7 +122,7 @@ class ShareDialog extends React.PureComponent<IProps, IShareDialogState> {
       {/* <h5 className={classes.sectionHeader}>电子邮件</h5>
       <br/> */}
       <p className={classes.inputlabel}>代码</p>
-      <TextInput className={classes.textInput} placeholder='嵌入网页' type='text' readOnly value={publicUrl}/>
+      <TextInput className={classes.textInput} placeholder='嵌入网页' type='text' readOnly value={window.location.origin + publicUrl}/>
     </div>;
   }
 
@@ -131,11 +131,11 @@ class ShareDialog extends React.PureComponent<IProps, IShareDialogState> {
     return <ResponsivePanel
       onClose={onClose}
       title='分享'
-      submitLabel='发送'
+      submitLabel='功能暂时不可用'
     >
       <section className={classes.section}>
         <h5 className={classes.sectionHeader}>链接</h5>
-        <TextInput className={classes.textInput} placeholder='链接' type='text' readOnly value={publicUrl}/>
+        <TextInput className={classes.textInput} placeholder='链接' type='text' readOnly value={window.location.origin + publicUrl}/>
       </section>
       <section className={classes.section}>
         <span className={classes.tablabel}>分享方式</span>

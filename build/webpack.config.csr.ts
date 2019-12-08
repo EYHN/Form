@@ -43,7 +43,8 @@ const config: webpack.Configuration = {
 
   resolve: {
     alias: {
-      'react-loadable': path.resolve(__dirname, '../tools/loadable')
+      'react-loadable': path.resolve(__dirname, '../tools/loadable'),
+      'config': path.resolve(__dirname, '../config.ts')
     },
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     modules: [path.resolve(__dirname, '../view'), 'node_modules']

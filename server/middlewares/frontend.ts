@@ -7,7 +7,6 @@ import koastatic from 'koa-static';
 const render = require(path.resolve(process.cwd(), 'dist/ssr/server/server.js')).render;
 
 const frontend:koa.Middleware = async function (ctx) {
-  console.log(ctx.path);
   ctx.body = await render(ctx.path, path.resolve(process.cwd(), 'dist/ssr/server/'));
 }
 

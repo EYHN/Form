@@ -11,7 +11,7 @@ const formAPI = new Router();
 
 function buildForm(id: string, template: IFormTemplate, key: IFormKey, date: string): IForm {
   return {
-    url: 'http://theform.app/form/' + id,
+    url: '/form/' + id,
     id,
     key,
     date,
