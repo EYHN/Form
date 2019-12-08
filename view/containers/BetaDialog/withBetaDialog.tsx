@@ -1,5 +1,6 @@
 import React from 'react';
 import BetaDialog from '.';
+import NoSSR from 'components/NoSSR';
 
 export default class WithBetaDialog extends React.PureComponent<{}, {open: boolean}> {
   state = {
@@ -13,7 +14,9 @@ export default class WithBetaDialog extends React.PureComponent<{}, {open: boole
   render() {
     const {children} = this.props;
     return <>
-      {this.state.open && <BetaDialog onClose={this.handleClose} />}
+      <NoSSR>
+        {this.state.open && <BetaDialog onClose={this.handleClose} />}
+      </NoSSR>
       {children}
     </>
   }

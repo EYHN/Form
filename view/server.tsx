@@ -12,6 +12,7 @@ import { jss } from 'styles';
 import configureStore from 'store';
 import { Provider } from 'react-redux';
 import { END } from 'redux-saga';
+import WithBetaDialog from 'containers/BetaDialog/withBetaDialog';
 
 const preloadPromise = Loadable.preloadAll();
 
@@ -32,7 +33,9 @@ export const render = async (location: string, __dirname: string) => {
       <Provider store={store}>
         <StaticRouter location={location} context={routerContext}>
           <JssProvider registry={sheets} jss={jss}>
-            <App />
+            <WithBetaDialog>
+              <App />
+            </WithBetaDialog>
           </JssProvider>
         </StaticRouter>
       </Provider>
